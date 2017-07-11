@@ -6,8 +6,9 @@
 #include <iostream>
 #include <cmath>
 
-Map::Map()
+Map::Map(sf::Texture& texture)
 :m_mapSize(0,0)
+,m_texture(texture)
 {
 
 }
@@ -20,7 +21,7 @@ void Map::loadLevel(std::string name) {
 
     m_mapSize = sf::Vector2i(levelData.getSize());
 
-    if (m_mapSize.x < 20 || m_mapSize.y < 11)
+    if (m_mapSize.x < 20 || m_mapSize.y < 15)
         throw std::runtime_error("the loaded level is too small");
 
     for (unsigned int y = 0; y < m_mapSize.y; y++) {
@@ -38,6 +39,8 @@ void Map::loadLevel(std::string name) {
                 //the hero start the level here
                 m_heroPosition = sf::Vector2i(x, y);
                 m_mapData.push_back(Empty);
+            } else{
+                m_mapData.push_back(Empty);
             }
         }
     }
@@ -45,7 +48,13 @@ void Map::loadLevel(std::string name) {
     m_renderTexture.create(64 * m_mapSize.x, 64 * m_mapSize.y);
     m_renderTexture.clear(sf::Color::White);
 
-    //draw something
+    sf::Sprite grass(m_texture);
+    grass.setTextureRect(sf::IntRect(0,603,64,64));
+
+    sf::Sprite ground(m_texture);
+    ground.setTextureRect(sf::IntRect(64,539,64,64));
+
+
 
     m_renderTexture.display();
 
@@ -54,27 +63,27 @@ void Map::loadLevel(std::string name) {
 
         if (m_mapData[i] == Ground) {
 
-            sf::RectangleShape ground;
-            ground.setSize(sf::Vector2f(64, 64));
-            ground.setFillColor(sf::Color::Blue);
             ground.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(ground);
 
         }
         else if (m_mapData[i] == Grass) {
 
-            sf::RectangleShape grass;
-            grass.setSize(sf::Vector2f(64, 64));
-            grass.setFillColor(sf::Color::Yellow);
             grass.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(grass);
 
         }
     }
 }
+
+
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
     target.draw(sf::Sprite(m_renderTexture.getTexture()),states);
+}
+
+sf::Vector2i Map::getSize() const {
+    return m_mapSize;
 }
 
 sf::Vector2i Map::getHeroPosition() const {

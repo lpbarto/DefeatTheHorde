@@ -6,7 +6,7 @@
 #include <iostream>
 
 Game::Game()
-        :m_window(sf::VideoMode(1280, 720), "VideoGame")
+        :m_window(sf::VideoMode(1280, 960), "DefeatTheHorde")
 {
     if(!m_font.loadFromFile("assets/3Dventure.ttf"))
         throw std::runtime_error("unable to load font file");
@@ -14,8 +14,9 @@ Game::Game()
     if(!m_logo.loadFromFile("assets/logo.png"))
         throw std::runtime_error("unable to load the logo file");
 
-    if(!m_texture.loadFromFile("assets/hero-animation.png"))
+    if(!m_texture.loadFromFile("assets/texture.png"))
         throw std::runtime_error("unable to load texture file");
+
 
     m_gameStates[GameState::Wellcome] = new WellcomeState(this);
     m_gameStates[GameState::LevelInfo] = new LevelInfoState(this);
@@ -55,6 +56,11 @@ void Game::run() {
                     m_currentState->moveStick(sf::Vector2i(-1,0));
                 if(event.key.code == sf::Keyboard::Right)
                     m_currentState->moveStick(sf::Vector2i(1,0));
+
+                if (event.key.code == sf::Keyboard::Up)
+                    m_currentState->moveStick(sf::Vector2i(0, -1));
+                if (event.key.code == sf::Keyboard::Down)
+                    m_currentState->moveStick(sf::Vector2i(0, 1));
 
             }
 

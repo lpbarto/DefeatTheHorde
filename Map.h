@@ -13,7 +13,7 @@ class Map : public sf::Drawable{
 
 public:
 
-    Map();
+    Map(sf::Texture& texture);
 
     void loadLevel(std::string name);
 
@@ -26,6 +26,8 @@ public:
     sf::Vector2f mapCellToPixel(sf::Vector2i cell) const;
 
     bool isGrass(sf::Vector2i position) const;
+
+    sf::Vector2i getSize() const;
 
 
 
@@ -47,6 +49,7 @@ private:
     sf::Vector2i m_heroPosition;
 
     sf::RenderTexture m_renderTexture;
+    sf::Texture& m_texture;
 
 
 };

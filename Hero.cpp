@@ -83,4 +83,5 @@ void Hero::update(sf::Time delta)
             m_isDead = true;
         }
     }
+    GameCharacter::update(delta);
 }

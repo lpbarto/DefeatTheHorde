@@ -111,6 +111,8 @@ private:
     Map m_map;
     Hero* m_hero;
 
+    sf::View m_camera;
+
 };
 
 class WonState : public GameState {

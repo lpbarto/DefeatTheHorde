@@ -62,16 +62,20 @@ GetReadyState::GetReadyState(Game* game): GameState(game){
 PlayingState::PlayingState(Game* game)
         : GameState(game)
 //,m_hero(game->getTexture())
+,m_map(game->getTexture())
 ,m_hero(nullptr)
 
 {
 
-    m_map.loadLevel("level");
+    m_map.loadLevel("large-level");
     //m_hero.move(400,50);
 
     m_hero = new Hero(game->getTexture());
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
+
+    m_camera.setSize(sf::Vector2f(1280,960));
+   // m_camera.setCenter(m_hero->getPosition());
 
 
 }
@@ -207,13 +211,30 @@ void PlayingState::pressStart() {
 }
 void PlayingState::moveStick(sf::Vector2i direction) {
 
+    m_hero->setDirection(direction);
+
 }
 void PlayingState::update(sf::Time delta) {
+
+    m_camera.setCenter(m_hero->getPosition());
+
+    if(m_camera.getCenter().x < 640)
+        m_camera.setCenter(640,m_camera.getCenter().y);
+    if(m_camera.getCenter().y < 480)
+        m_camera.setCenter(m_camera.getCenter().x, 480);
+
+    if(m_camera.getCenter().x > m_map.getSize().x * 64 - 640)
+        m_camera.setCenter(m_map.getSize().x * 64 - 640, m_camera.getCenter().y);
+    if(m_camera.getCenter().y > m_map.getSize().y * 64 - 480)
+        m_camera.setCenter(m_camera.getCenter().x, m_map.getSize().y * 64 - 480);
+
+
     m_hero->update(delta);
 
 }
 void PlayingState::draw(sf::RenderWindow &window) {
 
+    window.setView(m_camera);
     window.draw(m_map);
     window.draw(*m_hero);
 
