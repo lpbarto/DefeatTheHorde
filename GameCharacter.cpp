@@ -7,10 +7,11 @@
 
 
 GameCharacter::GameCharacter()
-        :m_speed(40.f)
+:m_map(nullptr)
+,m_speed(40.f)
 ,m_currentDirection(1,0)
 ,m_nextDirection(0,0)
-,m_map(nullptr)
+
 
 {
 

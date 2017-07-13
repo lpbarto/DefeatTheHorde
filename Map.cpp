@@ -35,7 +35,7 @@ void Map::loadLevel(std::string name) {
                 m_mapData.push_back(Ground);
             } else if (cellData == sf::Color::Green) {
                 m_mapData.push_back(Grass);
-            } else if (cellData == sf::Color::Blue) {
+            } else if (cellData == sf::Color::Red) {
                 //the hero start the level here
                 m_heroPosition = sf::Vector2i(x, y);
                 m_mapData.push_back(Empty);
@@ -46,7 +46,9 @@ void Map::loadLevel(std::string name) {
     }
 
     m_renderTexture.create(64 * m_mapSize.x, 64 * m_mapSize.y);
-    m_renderTexture.clear(sf::Color::White);
+
+    m_renderTexture.clear(sf::Color(71,161,193));
+
 
     sf::Sprite grass(m_texture);
     grass.setTextureRect(sf::IntRect(0,603,64,64));

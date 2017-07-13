@@ -17,13 +17,14 @@ GameState::GameState(Game* game): m_game(game){}
 WellcomeState::WellcomeState(Game* game): GameState(game){
 
     m_sprite.setTexture(game->getLogo());
-    m_sprite.setPosition(20,50);
+    m_sprite.setPosition(165,200);
 
     m_text.setFont(game->getFont());
     m_text.setString("Press Start");
+    m_text.setCharacterSize(50);
 
     centerOrigin(m_text);
-    m_text.setPosition(240,140);
+    m_text.setPosition(600,500);
 
     m_displayText = true;
 
@@ -33,10 +34,10 @@ LevelInfoState::LevelInfoState(Game* game): GameState(game){
 
     m_text.setFont(game->getFont());
     m_text.setString("Level 1");
-    m_text.setCharacterSize(28);
+    m_text.setCharacterSize(50);
 
     centerOrigin(m_text);
-    m_text.setPosition(240,240);
+    m_text.setPosition(600,300);
 
 
 }
@@ -52,10 +53,10 @@ GetReadyState::GetReadyState(Game* game): GameState(game){
 
     m_text.setFont(game->getFont());
     m_text.setString("Press Start when you are ready");
-    m_text.setCharacterSize(14);
+    m_text.setCharacterSize(40);
 
     centerOrigin(m_text);
-    m_text.setPosition(240,240);
+    m_text.setPosition(500,300);
 
 }
 
@@ -67,7 +68,7 @@ PlayingState::PlayingState(Game* game)
 
 {
 
-    m_map.loadLevel("large-level");
+    m_map.loadLevel("large-level2");
     //m_hero.move(400,50);
 
     m_hero = new Hero(game->getTexture());
