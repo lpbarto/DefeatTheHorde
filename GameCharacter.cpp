@@ -8,8 +8,8 @@
 
 GameCharacter::GameCharacter()
 :m_map(nullptr)
-,m_speed(40.f)
-,m_currentDirection(1,0)
+,m_speed(100.f)
+,m_currentDirection(0,0)
 ,m_nextDirection(0,0)
 
 
@@ -63,6 +63,7 @@ void GameCharacter::update(sf::Time delta) {
     sf::Vector2f nextPixelPosition = pixelPosition + sf::Vector2f(m_currentDirection) * pixelTraveled;
     setPosition(nextPixelPosition);
 
+
     sf::Vector2i cellPosition = m_map->mapPixelToCell(pixelPosition);
 
     sf::Vector2f offset;
@@ -91,20 +92,14 @@ void GameCharacter::update(sf::Time delta) {
             if (m_currentDirection == sf::Vector2i(1, 0)) {
                 setRotation(0);
                 setScale(1, 1);
-                /*} else if (m_currentDirection == sf::Vector2i(0, 1)) {
-                    setRotation(90);
-                    setScale(-1, 1);*/
             } else if (m_currentDirection == sf::Vector2i(-1, 0)) {
                 setRotation(0);
                 setScale(-1, 1);
-                /*} else if (m_currentDirection == sf::Vector2i(0, -1)) {
-                    setRotation(90);
-                    setScale(1, 1);
-                }*/
+
+                }
+
             }
 
         }
     }
-}
-
 

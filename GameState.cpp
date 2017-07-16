@@ -232,6 +232,7 @@ void PlayingState::update(sf::Time delta) {
 
     m_hero->update(delta);
 
+
 }
 void PlayingState::draw(sf::RenderWindow &window) {
 

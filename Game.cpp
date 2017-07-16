@@ -47,15 +47,20 @@ void Game::run() {
                 m_window.close();
             }
 
+            if(event.type != sf::Event::KeyPressed){
+                m_currentState->moveStick(sf::Vector2i(0,0));
+            }
+
             if(event.type == sf::Event::KeyPressed)
             {
                 if(event.key.code == sf::Keyboard::I)
                     m_currentState->pressStart();
 
-                if(event.key.code == sf::Keyboard::Left)
+                if (event.key.code == sf::Keyboard::Left)
                     m_currentState->moveStick(sf::Vector2i(-1,0));
-                if(event.key.code == sf::Keyboard::Right)
+                if (event.key.code == sf::Keyboard::Right)
                     m_currentState->moveStick(sf::Vector2i(1,0));
+
 
                 if (event.key.code == sf::Keyboard::Up)
                     m_currentState->moveStick(sf::Vector2i(0, -1));

@@ -31,6 +31,7 @@ public:
     float getM_speed() const;
 
     void setM_speed(float m_speed);
+    
 
 private:
 
