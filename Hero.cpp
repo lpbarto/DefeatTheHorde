@@ -11,17 +11,19 @@ Hero::Hero(sf::Texture& texture)
 {
     setOrigin(20,20);
 
-    /*
-    m_runAnimator.addFrame(sf::IntRect(3308,1924,400,666));
-    m_runAnimator.addFrame(sf::IntRect(0,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(372,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(750,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(1133,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(1515,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(1917,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(2336,2573,400,666));
-    m_runAnimator.addFrame(sf::IntRect(2747,2573,400,666));*/
+
+    m_runAnimator.addFrame(sf::IntRect(551,321,67,105));
+    m_runAnimator.addFrame(sf::IntRect(0,429,61,110));
+    m_runAnimator.addFrame(sf::IntRect(62,429,62,104));
+    m_runAnimator.addFrame(sf::IntRect(126,429,62,103));
+    m_runAnimator.addFrame(sf::IntRect(189,429,63,103));
+    m_runAnimator.addFrame(sf::IntRect(252,429,67,104));
+    m_runAnimator.addFrame(sf::IntRect(319,429,70,107));
+    m_runAnimator.addFrame(sf::IntRect(389,429,68,104));
+    m_runAnimator.addFrame(sf::IntRect(457,429,70,103));
     m_runAnimator.addFrame(sf::IntRect(527,429,72,105));
+
+    m_notMovingAnimator.addFrame(sf::IntRect(527,429,72,105));
 
 /*
     m_dieAnimator.addFrame(sf::IntRect(467,622,500,666));
@@ -35,7 +37,10 @@ Hero::Hero(sf::Texture& texture)
     m_dieAnimator.addFrame(sf::IntRect(1242,1260,500,666));
     m_dieAnimator.addFrame(sf::IntRect(1933,1260,500,666));
 */
-    m_runAnimator.play(sf::seconds(1.1), true);
+    m_notMovingAnimator.play(sf::seconds(1), true);
+
+
+
 }
 
 void Hero::die() {
@@ -55,6 +60,7 @@ bool Hero::isDead() const {
     return m_isDead;
 }
 
+
 void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     states.transform *= getTransform();
@@ -67,14 +73,23 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Hero::update(sf::Time delta)
 {
-    if (!m_isDead && !m_isDying)
+    if(!m_isDead && !m_isDying && getDirection() == sf::Vector2i(0,0))
     {
+        m_notMovingAnimator.play(sf::seconds(1),true);
+        m_notMovingAnimator.update(delta);
+        m_notMovingAnimator.animate(m_visual);
+    }
+
+    else if (!m_isDead && !m_isDying && getDirection() != sf::Vector2i(0,0))
+    {
+        m_runAnimator.play(sf::seconds(1.1),true);
         m_runAnimator.update(delta);
         m_runAnimator.animate(m_visual);
     }
+
     else
     {
-       //m_dieAnimator.update(delta);
+        m_dieAnimator.update(delta);
         m_dieAnimator.animate(m_visual);
 
         if (!m_dieAnimator.isPlaying())

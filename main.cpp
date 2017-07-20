@@ -4,6 +4,6 @@
 
 int main() {
 
-    Game videoGame;
-    videoGame.run();
+    Game defeatTheHorde;
+    defeatTheHorde.run();
 }
