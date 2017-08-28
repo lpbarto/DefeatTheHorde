@@ -43,6 +43,7 @@ void Game::run() {
         sf::Event event;
         while(m_window.pollEvent(event)){
 
+
             if(event.type == sf::Event::Closed) {
                 m_window.close();
             }
@@ -53,8 +54,12 @@ void Game::run() {
 
             if(event.type == sf::Event::KeyPressed)
             {
+
                 if(event.key.code == sf::Keyboard::I)
                     m_currentState->pressStart();
+
+                if(event.key.code == sf::Keyboard::Num1)
+                    m_currentState->pressOne();
 
                 if (event.key.code == sf::Keyboard::Left)
                     m_currentState->moveStick(sf::Vector2i(-1,0));
@@ -96,3 +101,4 @@ sf::Texture& Game::getLogo() {
 sf::Texture& Game::getTexture() {
     return m_texture;
 }
+

@@ -22,6 +22,7 @@ public:
     sf::Texture& getLogo();
     sf::Texture& getTexture();
 
+
     void changeGameState(GameState::State gameState);
 
 

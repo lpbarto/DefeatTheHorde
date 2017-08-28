@@ -9,7 +9,7 @@ Hero::Hero(sf::Texture& texture)
         , m_isDying(false)
         , m_isDead(false)
 {
-    setOrigin(20,20);
+    setOrigin(30,60);
 
 
     m_runAnimator.addFrame(sf::IntRect(551,321,67,105));

@@ -129,8 +129,10 @@ sf::Vector2f Map::mapCellToPixel(sf::Vector2i cell) const {
 
 bool Map::isGrass(sf::Vector2i position) const {
 
-    if(position.x < 0 || position.y < 0 || position.x >= m_mapSize.x || position.y >= m_mapSize.y)
+    if(position.y < 0 || position.y >= m_mapSize.y)
         return false;
+    if(position.x < 0 || position.x >= m_mapSize.x)
+        return true;
 
     return m_mapData[positionToIndex(position)] == Grass;
 

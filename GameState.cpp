@@ -12,7 +12,10 @@ void centerOrigin(T& drawable){
     drawable.setOrigin(bound.width/2, bound.height/2);
 }
 
-GameState::GameState(Game* game): m_game(game){}
+GameState::GameState(Game* game): m_game(game){
+}
+
+void GameState::pressOne() {}
 
 WellcomeState::WellcomeState(Game* game): GameState(game){
 
@@ -46,6 +49,18 @@ CharacterSelectionState::CharacterSelectionState(Game* game)
         : GameState(game)
 
 {
+    if(!m_heroTexture.loadFromFile("assets/heroTexture.png"))
+        throw std::runtime_error("unable to load heroTexture file");
+
+    m_text.setFont(game->getFont());
+    m_text.setString("Chose a character pressing a number");
+    m_text.setCharacterSize(40);
+
+    centerOrigin(m_text);
+    m_text.setPosition(500,100);
+
+    m_sprite.setTexture(m_heroTexture);
+    m_sprite.setPosition(0,240);
 
 }
 
@@ -157,6 +172,7 @@ void LevelInfoState::moveStick(sf::Vector2i direction) {
 }
 void LevelInfoState::update(sf::Time delta) {
 
+
 }
 void LevelInfoState::draw(sf::RenderWindow &window) {
 
@@ -168,9 +184,12 @@ void LevelInfoState::draw(sf::RenderWindow &window) {
 
 void CharacterSelectionState::pressStart() {
 
-    getGame()->changeGameState(GameState::GetReady);
 
 }
+void CharacterSelectionState::pressOne() {
+    getGame()->changeGameState(GameState::Playing);
+}
+
 void CharacterSelectionState::moveStick(sf::Vector2i direction) {
 
 
@@ -179,10 +198,13 @@ void CharacterSelectionState::moveStick(sf::Vector2i direction) {
 void CharacterSelectionState::update(sf::Time delta) {
 
 
+
+
 }
 void CharacterSelectionState::draw(sf::RenderWindow &window) {
 
-
+    window.draw(m_sprite);
+    window.draw(m_text);
 
 }
 
