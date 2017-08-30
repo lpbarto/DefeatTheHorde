@@ -28,13 +28,16 @@ public:
     Game* getGame() const;
 
     virtual void pressStart()=0;
-    virtual void pressOne();
+    virtual void pressOne(int number);
     virtual void moveStick(sf::Vector2i direction)=0;
     virtual void update(sf::Time delta)=0;
     virtual void draw(sf::RenderWindow& window)=0;
 
+    int m_cN;
+
 private:
     Game* m_game;
+
 
 };
 
@@ -74,15 +77,17 @@ class CharacterSelectionState : public GameState {
 public:
     CharacterSelectionState (Game* game);
     virtual void pressStart();
-    void pressOne();
+    void pressOne(int number);
     virtual void moveStick(sf::Vector2i direction);
     virtual void update(sf::Time delta);
     virtual void draw(sf::RenderWindow& window);
+
 
 private:
     sf::Text m_text;
     sf::Sprite m_sprite;
     sf::Texture m_heroTexture;
+
 
 };
 

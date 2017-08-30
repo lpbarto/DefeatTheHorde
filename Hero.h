@@ -15,7 +15,9 @@
 class Hero : public GameCharacter {
 
 public:
-    Hero(sf::Texture& texture);
+    Hero(sf::Texture& texture, int characterNumber);
+
+
 
     void die();
 

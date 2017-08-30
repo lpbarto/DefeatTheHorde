@@ -4,26 +4,28 @@
 
 #include "Hero.h"
 
-Hero::Hero(sf::Texture& texture)
+Hero::Hero(sf::Texture& texture, int characterNumber)
         : m_visual(texture)
         , m_isDying(false)
         , m_isDead(false)
 {
-    setOrigin(30,60);
+  if(characterNumber == 1) {
+
+        setOrigin(30, 60);
 
 
-    m_runAnimator.addFrame(sf::IntRect(551,321,67,105));
-    m_runAnimator.addFrame(sf::IntRect(0,429,61,110));
-    m_runAnimator.addFrame(sf::IntRect(62,429,62,104));
-    m_runAnimator.addFrame(sf::IntRect(126,429,62,103));
-    m_runAnimator.addFrame(sf::IntRect(189,429,63,103));
-    m_runAnimator.addFrame(sf::IntRect(252,429,67,104));
-    m_runAnimator.addFrame(sf::IntRect(319,429,70,107));
-    m_runAnimator.addFrame(sf::IntRect(389,429,68,104));
-    m_runAnimator.addFrame(sf::IntRect(457,429,70,103));
-    m_runAnimator.addFrame(sf::IntRect(527,429,72,105));
+        m_runAnimator.addFrame(sf::IntRect(551, 321, 67, 105));
+        m_runAnimator.addFrame(sf::IntRect(0, 429, 61, 110));
+        m_runAnimator.addFrame(sf::IntRect(62, 429, 62, 104));
+        m_runAnimator.addFrame(sf::IntRect(126, 429, 62, 103));
+        m_runAnimator.addFrame(sf::IntRect(189, 429, 63, 103));
+        m_runAnimator.addFrame(sf::IntRect(252, 429, 67, 104));
+        m_runAnimator.addFrame(sf::IntRect(319, 429, 70, 107));
+        m_runAnimator.addFrame(sf::IntRect(389, 429, 68, 104));
+        m_runAnimator.addFrame(sf::IntRect(457, 429, 70, 103));
+        m_runAnimator.addFrame(sf::IntRect(527, 429, 72, 105));
 
-    m_notMovingAnimator.addFrame(sf::IntRect(527,429,72,105));
+        m_notMovingAnimator.addFrame(sf::IntRect(527, 429, 72, 105));
 
 /*
     m_dieAnimator.addFrame(sf::IntRect(467,622,500,666));
@@ -37,8 +39,15 @@ Hero::Hero(sf::Texture& texture)
     m_dieAnimator.addFrame(sf::IntRect(1242,1260,500,666));
     m_dieAnimator.addFrame(sf::IntRect(1933,1260,500,666));
 */
-    m_notMovingAnimator.play(sf::seconds(1), true);
+        m_notMovingAnimator.play(sf::seconds(1), true);
+    }else if(characterNumber == 2){
 
+       setOrigin(30, 60);
+
+        m_notMovingAnimator.addFrame(sf::IntRect(467,622,500,666));
+        m_notMovingAnimator.play(sf::seconds(1), true);
+
+    }
 
 
 }

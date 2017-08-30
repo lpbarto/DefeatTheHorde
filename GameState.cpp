@@ -12,10 +12,14 @@ void centerOrigin(T& drawable){
     drawable.setOrigin(bound.width/2, bound.height/2);
 }
 
+
 GameState::GameState(Game* game): m_game(game){
 }
 
-void GameState::pressOne() {}
+
+void GameState::pressOne(int number) {
+
+}
 
 WellcomeState::WellcomeState(Game* game): GameState(game){
 
@@ -44,6 +48,8 @@ LevelInfoState::LevelInfoState(Game* game): GameState(game){
 
 
 }
+
+
 
 CharacterSelectionState::CharacterSelectionState(Game* game)
         : GameState(game)
@@ -86,11 +92,13 @@ PlayingState::PlayingState(Game* game)
     m_map.loadLevel("large-level2");
     //m_hero.move(400,50);
 
-    m_hero = new Hero(game->getTexture());
+std::cout<<GameState::m_cN;
+    m_hero = new Hero(game->getTexture(), 1);
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
 
     m_camera.setSize(sf::Vector2f(1280,960));
+
    // m_camera.setCenter(m_hero->getPosition());
 
 
@@ -186,8 +194,13 @@ void CharacterSelectionState::pressStart() {
 
 
 }
-void CharacterSelectionState::pressOne() {
+
+void CharacterSelectionState::pressOne(int number){
+
     getGame()->changeGameState(GameState::Playing);
+
+    GameState::m_cN = number;
+
 }
 
 void CharacterSelectionState::moveStick(sf::Vector2i direction) {
@@ -212,6 +225,7 @@ void CharacterSelectionState::draw(sf::RenderWindow &window) {
 
 void GetReadyState::pressStart() {
 
+
     getGame()->changeGameState(GameState::Playing);
 
 }
@@ -230,6 +244,7 @@ void GetReadyState::draw(sf::RenderWindow &window) {
 
 
 void PlayingState::pressStart() {
+
 
 }
 void PlayingState::moveStick(sf::Vector2i direction) {
@@ -299,3 +314,7 @@ void LostState::draw(sf::RenderWindow &window) {
     window.draw(m_text);
 
 }
+
+
+
+

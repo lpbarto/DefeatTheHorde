@@ -22,9 +22,9 @@ Game::Game()
     m_gameStates[GameState::LevelInfo] = new LevelInfoState(this);
     m_gameStates[GameState::CharacterSelection] = new CharacterSelectionState(this);
     m_gameStates[GameState::GetReady] = new GetReadyState(this);
-    m_gameStates[GameState::Playing] = new PlayingState(this);
-    m_gameStates[GameState::Won] = new WonState(this);
-    m_gameStates[GameState::Lost] = new LostState(this);
+   // m_gameStates[GameState::Playing] = new PlayingState(this);
+   // m_gameStates[GameState::Won] = new WonState(this);
+   // m_gameStates[GameState::Lost] = new LostState(this);
 
     changeGameState(GameState::Wellcome);
 
@@ -58,8 +58,11 @@ void Game::run() {
                 if(event.key.code == sf::Keyboard::I)
                     m_currentState->pressStart();
 
-                if(event.key.code == sf::Keyboard::Num1)
-                    m_currentState->pressOne();
+                if(event.key.code == sf::Keyboard::Num1) {
+                    m_currentState->pressOne(1);
+                }else if(event.key.code == sf::Keyboard::Num2){
+                    m_currentState->pressOne(2);
+                }
 
                 if (event.key.code == sf::Keyboard::Left)
                     m_currentState->moveStick(sf::Vector2i(-1,0));
@@ -85,6 +88,13 @@ void Game::run() {
 }
 
 void Game::changeGameState(GameState::State gameState) {
+
+    if(gameState == GameState::State::Playing){
+        m_gameStates[GameState::Playing] = new PlayingState(this);
+        m_gameStates[GameState::Won] = new WonState(this);
+        m_gameStates[GameState::Lost] = new LostState(this);
+    }
+
 
     m_currentState = m_gameStates[gameState];
 
