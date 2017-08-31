@@ -33,7 +33,7 @@ public:
     virtual void update(sf::Time delta)=0;
     virtual void draw(sf::RenderWindow& window)=0;
 
-    int m_cN;
+    static int m_cN;
 
 private:
     Game* m_game;

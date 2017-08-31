@@ -90,6 +90,7 @@ void Game::run() {
 void Game::changeGameState(GameState::State gameState) {
 
     if(gameState == GameState::State::Playing){
+        GameState::m_cN = m_currentState->m_cN;
         m_gameStates[GameState::Playing] = new PlayingState(this);
         m_gameStates[GameState::Won] = new WonState(this);
         m_gameStates[GameState::Lost] = new LostState(this);

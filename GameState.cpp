@@ -81,6 +81,8 @@ GetReadyState::GetReadyState(Game* game): GameState(game){
 
 }
 
+int GameState::m_cN = 0;
+
 PlayingState::PlayingState(Game* game)
         : GameState(game)
 //,m_hero(game->getTexture())
@@ -92,8 +94,8 @@ PlayingState::PlayingState(Game* game)
     m_map.loadLevel("large-level2");
     //m_hero.move(400,50);
 
-std::cout<<GameState::m_cN;
-    m_hero = new Hero(game->getTexture(), 1);
+
+    m_hero = new Hero(game->getTexture(), m_cN);
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
 
@@ -197,9 +199,12 @@ void CharacterSelectionState::pressStart() {
 
 void CharacterSelectionState::pressOne(int number){
 
+    m_cN = number;
+
     getGame()->changeGameState(GameState::Playing);
 
-    GameState::m_cN = number;
+
+
 
 }
 
