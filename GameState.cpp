@@ -91,13 +91,23 @@ PlayingState::PlayingState(Game* game)
 
 {
 
-    m_map.loadLevel("large-level2");
+    m_map.loadLevel("large-level-villain");
     //m_hero.move(400,50);
 
 
     m_hero = new Hero(game->getTexture(), m_cN);
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
+
+  for (auto villainPosition : m_map.getVillainPositions())
+    {
+        Villain* villain = new Villain(game->getTexture());
+        villain->setMap(&m_map);
+        villain->setPosition(m_map.mapCellToPixel(villainPosition));
+
+        m_villains.push_back(villain);
+    }
+
 
     m_camera.setSize(sf::Vector2f(1280,960));
 
@@ -107,7 +117,12 @@ PlayingState::PlayingState(Game* game)
 }
 
 PlayingState::~PlayingState() {
+
     delete m_hero;
+
+    for (Villain* villain : m_villains)
+        delete villain;
+
 }
 
 WonState::WonState(Game* game): GameState(game){
@@ -251,6 +266,8 @@ void GetReadyState::draw(sf::RenderWindow &window) {
 void PlayingState::pressStart() {
 
 
+
+
 }
 void PlayingState::moveStick(sf::Vector2i direction) {
 
@@ -274,6 +291,9 @@ void PlayingState::update(sf::Time delta) {
 
     m_hero->update(delta);
 
+   for (Villain* villain : m_villains)
+      villain->update(delta);
+
 
 }
 void PlayingState::draw(sf::RenderWindow &window) {
@@ -281,6 +301,10 @@ void PlayingState::draw(sf::RenderWindow &window) {
     window.setView(m_camera);
     window.draw(m_map);
     window.draw(*m_hero);
+
+    for (Villain* villain : m_villains)
+        window.draw(*villain);
+
 
 }
 

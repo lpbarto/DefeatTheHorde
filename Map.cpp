@@ -39,6 +39,10 @@ void Map::loadLevel(std::string name) {
                 //the hero start the level here
                 m_heroPosition = sf::Vector2i(x, y);
                 m_mapData.push_back(Empty);
+            }else if(cellData == sf::Color(50,50,50)){
+                //villain positions
+                m_villainPositions.push_back(sf::Vector2i(x,y));
+                m_mapData.push_back(Empty);
             } else{
                 m_mapData.push_back(Empty);
             }
@@ -91,6 +95,12 @@ sf::Vector2i Map::getSize() const {
 sf::Vector2i Map::getHeroPosition() const {
     return m_heroPosition;
 }
+
+std::vector<sf::Vector2i> Map::getVillainPositions() const
+{
+    return m_villainPositions;
+}
+
 
 std::size_t Map::positionToIndex(sf::Vector2i position) const {
     return position.y * m_mapSize.x + position.x;

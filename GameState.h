@@ -120,6 +120,7 @@ private:
 
     Map m_map;
     Hero* m_hero;
+    std::vector<Villain*> m_villains;
 
     sf::View m_camera;
 

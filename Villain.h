@@ -14,7 +14,7 @@ class Villain : public GameCharacter {
 
 public:
 
-    Villain(sf::Texture& texture, int characterNumber);
+    Villain(sf::Texture& texture);
 
 
 
@@ -34,9 +34,9 @@ private:
     bool m_isDying;
     bool m_isDead;
 
-    Animator m_runAnimator;
+
     Animator m_dieAnimator;
-    Animator m_notMovingAnimator;
+    Animator m_waitAnimator;
 
 
 };

@@ -40,7 +40,9 @@ private:
 
     Animator m_runAnimator;
     Animator m_dieAnimator;
-    Animator m_notMovingAnimator;
+    Animator m_idleAnimator;
+    Animator m_jumpAnimator;
+    Animator m_attackAnimator;
 
 
 

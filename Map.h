@@ -18,6 +18,7 @@ public:
     void loadLevel(std::string name);
 
     sf::Vector2i getHeroPosition()const;
+    std::vector<sf::Vector2i> getVillainPositions() const;
 
     inline std::size_t positionToIndex(sf::Vector2i position) const;
     inline sf::Vector2i indexToPosition(std::size_t index) const;
@@ -49,6 +50,8 @@ private:
     std::vector<CellData> m_mapData;
 
     sf::Vector2i m_heroPosition;
+
+    std::vector<sf::Vector2i> m_villainPositions;
 
     sf::RenderTexture m_renderTexture;
     sf::Texture& m_texture;
