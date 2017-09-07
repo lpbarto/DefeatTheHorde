@@ -9,6 +9,8 @@
 #include "GameCharacter.h"
 #include "Villain.h"
 #include "Animator.h"
+#include "MovementStrategy.h"
+
 
 class Villain : public GameCharacter {
 
@@ -16,12 +18,15 @@ public:
 
     Villain(sf::Texture& texture);
 
+    void setBehavior(MovementStrategy *behavior);
+
 
 
     void die();
 
     bool isDying() const;
     bool isDead() const;
+
 
 
     void update(sf::Time delta);
@@ -37,6 +42,9 @@ private:
 
     Animator m_dieAnimator;
     Animator m_waitAnimator;
+
+    MovementStrategy* m_behavior;
+
 
 
 };

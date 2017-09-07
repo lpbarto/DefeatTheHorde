@@ -81,3 +81,6 @@ void Villain::update(sf::Time delta)
     GameCharacter::update(delta);
 }
 
+void Villain::setBehavior(MovementStrategy *behavior) {
+    m_behavior = behavior;
+}
