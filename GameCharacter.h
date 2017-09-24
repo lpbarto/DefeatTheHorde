@@ -5,6 +5,7 @@
 #ifndef VIDEOGAME_GAMECHARACTER_H
 #define VIDEOGAME_GAMECHARACTER_H
 
+#include <array>
 #include <SFML/Graphics.hpp>
 #include "Map.h"
 
@@ -19,6 +20,8 @@ public:
     void setDirection(sf::Vector2i direction);
     sf::Vector2i getDirection() const;
     void setMap(Map* map);
+
+    sf::FloatRect getCollisionBox() const;
 
     int getM_hp() const;
 

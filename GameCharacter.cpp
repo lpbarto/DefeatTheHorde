@@ -17,6 +17,12 @@ GameCharacter::GameCharacter()
 
 }
 
+sf::FloatRect GameCharacter::getCollisionBox() const {
+
+    sf::FloatRect bounds(3, 3, 34, 34);
+    return getTransform().transformRect(bounds);
+}
+
 void GameCharacter::setMap(Map* map) {
     m_map = map;
 }

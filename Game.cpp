@@ -75,6 +75,9 @@ void Game::run() {
                 if (event.key.code == sf::Keyboard::Down)
                     m_currentState->moveStick(sf::Vector2i(0, 1));
 
+                if(event.key.code == sf::Keyboard::A)
+                    m_currentState->pressA();
+
             }
 
 

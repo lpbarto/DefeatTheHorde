@@ -5,6 +5,8 @@
 #include "GameState.h"
 #include "Game.h"
 #include <iostream>
+#include <cmath>
+
 
 template <typename T>
 void centerOrigin(T& drawable){
@@ -18,6 +20,9 @@ GameState::GameState(Game* game): m_game(game){
 
 
 void GameState::pressOne(int number) {
+
+}
+void GameState::pressA() {
 
 }
 
@@ -262,11 +267,21 @@ void GetReadyState::draw(sf::RenderWindow &window) {
 }
 
 
+void PlayingState::pressA() {
+
+    for(Villain *villain : m_villains) {
+        if (villain->getCollisionBox().intersects(m_hero->getCollisionBox())) {
+
+            int villainHP = villain->getM_hp();
+            villain->setM_hp(villainHP -= m_hero->attack());
+
+        }
+    }
+
+
+}
 
 void PlayingState::pressStart() {
-
-
-
 
 }
 void PlayingState::moveStick(sf::Vector2i direction) {
@@ -293,6 +308,17 @@ void PlayingState::update(sf::Time delta) {
 
    for (Villain* villain : m_villains)
       villain->update(delta);
+
+    sf::Vector2f pixelPosition = m_hero->getPosition();
+    sf::Vector2f offset(std::fmod(pixelPosition.x, 32), std::fmod(pixelPosition.y, 32));
+    offset -= sf::Vector2f(16, 16);
+
+    if(offset.x <= 2 && offset.x >= -2 && offset.y <= 2 && offset.y >= -2){
+
+        sf::Vector2i cellPosition = m_map.mapPixelToCell(pixelPosition);
+
+    }
+
 
 
 }

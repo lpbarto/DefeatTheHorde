@@ -27,6 +27,8 @@ public:
     GameState (Game* game);
     Game* getGame() const;
 
+
+    virtual void pressA();
     virtual void pressStart()=0;
     virtual void pressOne(int number);
     virtual void moveStick(sf::Vector2i direction)=0;
@@ -111,6 +113,7 @@ class PlayingState : public GameState {
 public:
     PlayingState (Game* game);
     ~PlayingState();
+    virtual void pressA();
     virtual void pressStart();
     virtual void moveStick(sf::Vector2i direction);
     virtual void update(sf::Time delta);

@@ -17,12 +17,15 @@ class Hero : public GameCharacter {
 public:
     Hero(sf::Texture& texture, int characterNumber);
 
-
+    int attack();
 
     void die();
 
     bool isDying() const;
     bool isDead() const;
+
+    int getCharNum();
+    void setCharNum(int);
 
 
     void update(sf::Time delta);
@@ -32,6 +35,8 @@ public:
 private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    int CharNum;
 
 
     bool m_isDying;

@@ -11,6 +11,8 @@ Villain::Villain(sf::Texture &texture)
 {
     setOrigin(30,50);
 
+    setM_hp(10);
+
     m_waitAnimator.addFrame(sf::IntRect(14,1823,52,85));
     m_waitAnimator.addFrame(sf::IntRect(66,1823,53,85));
     m_waitAnimator.addFrame(sf::IntRect(120,1823,53,84));
@@ -61,6 +63,10 @@ void Villain::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Villain::update(sf::Time delta)
 {
+    if(getM_hp() <= 0){
+        this->die();
+    }
+
     if(!m_isDead && !m_isDying)
     {
         m_waitAnimator.play(sf::seconds(1),true);

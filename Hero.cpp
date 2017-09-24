@@ -9,12 +9,14 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
         , m_isDying(false)
         , m_isDead(false)
 {
+    setCharNum(characterNumber);
+
   if(characterNumber == 1) {  //hero
 
+      setM_hp(100);
 
 
       setOrigin(30, 60);
-
 
       m_runAnimator.addFrame(sf::IntRect(551, 321, 67, 105));
       m_runAnimator.addFrame(sf::IntRect(0, 429, 61, 110));
@@ -82,6 +84,7 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
       setOrigin(30,40);
 
       setM_speed(200.f);
+      setM_hp(50);
 
       m_runAnimator.addFrame(sf::IntRect(205,2446,60,80));
       m_runAnimator.addFrame(sf::IntRect(270,2452,60,83));
@@ -174,6 +177,15 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
 
 }
 
+int Hero::attack() {
+    m_attackAnimator.play(sf::seconds(0.5), false);
+    if(getCharNum() == 1) { //hero
+        return 10;
+    }else if (getCharNum() == 2){
+        return 5;
+    }
+}
+
 void Hero::die() {
 
     if(!m_isDying){
@@ -204,6 +216,10 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Hero::update(sf::Time delta)
 {
+    if(getM_hp() <= 0) {
+        this->die();
+    }
+
     if(!m_isDead && !m_isDying && getDirection() == sf::Vector2i(0,0))
     {
         m_idleAnimator.play(sf::seconds(1),true);
@@ -230,4 +246,13 @@ void Hero::update(sf::Time delta)
         }
     }
     GameCharacter::update(delta);
+}
+
+
+void Hero::setCharNum(int num) {
+    CharNum = num;
+}
+
+int Hero::getCharNum() {
+    return CharNum;
 }
