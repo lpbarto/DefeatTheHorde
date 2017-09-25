@@ -63,9 +63,7 @@ void Villain::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Villain::update(sf::Time delta)
 {
-    if(getM_hp() <= 0){
-        this->die();
-    }
+
 
     if(!m_isDead && !m_isDying)
     {

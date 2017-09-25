@@ -275,6 +275,13 @@ void PlayingState::pressA() {
             int villainHP = villain->getM_hp();
             villain->setM_hp(villainHP -= m_hero->attack());
 
+            if(villain->getM_hp() <= 0){
+                // villain->die();
+
+                m_villains.erase(std::find(m_villains.begin(), m_villains.end(), villain));
+
+            }
+
         }
     }
 
@@ -312,13 +319,13 @@ void PlayingState::update(sf::Time delta) {
     sf::Vector2f pixelPosition = m_hero->getPosition();
     sf::Vector2f offset(std::fmod(pixelPosition.x, 32), std::fmod(pixelPosition.y, 32));
     offset -= sf::Vector2f(16, 16);
-
+/*
     if(offset.x <= 2 && offset.x >= -2 && offset.y <= 2 && offset.y >= -2){
 
         sf::Vector2i cellPosition = m_map.mapPixelToCell(pixelPosition);
 
     }
-
+*/
 
 
 }
