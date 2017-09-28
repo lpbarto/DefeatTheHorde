@@ -23,7 +23,7 @@ Game::Game()
     m_gameStates[GameState::CharacterSelection] = new CharacterSelectionState(this);
     m_gameStates[GameState::GetReady] = new GetReadyState(this);
    // m_gameStates[GameState::Playing] = new PlayingState(this);
-   // m_gameStates[GameState::Won] = new WonState(this);
+    m_gameStates[GameState::Won] = new WonState(this, m_gameStates[GameState::Playing]);
    // m_gameStates[GameState::Lost] = new LostState(this);
 
     changeGameState(GameState::Wellcome);
@@ -92,10 +92,12 @@ void Game::run() {
 
 void Game::changeGameState(GameState::State gameState) {
 
-    if(gameState == GameState::State::Playing){
+    if(gameState == GameState::State::Playing && m_currentState == m_gameStates[GameState::CharacterSelection]){
+
         GameState::m_cN = m_currentState->m_cN;
+
         m_gameStates[GameState::Playing] = new PlayingState(this);
-        m_gameStates[GameState::Won] = new WonState(this);
+       // m_gameStates[GameState::Won] = new WonState(this);
         m_gameStates[GameState::Lost] = new LostState(this);
     }
 

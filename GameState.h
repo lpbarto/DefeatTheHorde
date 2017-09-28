@@ -25,6 +25,7 @@ public:
     };
 
     GameState (Game* game);
+
     Game* getGame() const;
 
 
@@ -119,7 +120,15 @@ public:
     virtual void update(sf::Time delta);
     virtual void draw(sf::RenderWindow& window);
 
+    void loadNextLevel();
+    void moveCharacterToInitialPosition();
+    void updateCameraPosition();
+    void resetToZero();
+    void resetCurrentLevel();
+
 private:
+
+    int m_level;
 
     Map m_map;
     Hero* m_hero;
@@ -132,7 +141,7 @@ private:
 class WonState : public GameState {
 
 public:
-    WonState (Game* game);
+    WonState (Game* game, GameState* playingState);
     virtual void pressStart();
     virtual void moveStick(sf::Vector2i direction);
     virtual void update(sf::Time delta);
@@ -141,6 +150,7 @@ public:
 private:
 
     sf::Text m_text;
+    PlayingState* m_playingState;
 
 };
 

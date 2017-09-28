@@ -4,10 +4,11 @@
 
 #include "Villain.h"
 
-Villain::Villain(sf::Texture &texture)
+Villain::Villain(sf::Texture &texture, Hero* hero)
         : m_visual(texture)
         , m_isDying(false)
         , m_isDead(false)
+        , m_hero(hero)
 {
     setOrigin(30,50);
 
@@ -37,7 +38,7 @@ Villain::Villain(sf::Texture &texture)
 void Villain::die() {
 
     if(!m_isDying){
-        m_dieAnimator.play(sf::seconds(1), false);
+        m_vdieAnimator.play(sf::seconds(1), false);
         m_isDying = true;
     }
 
@@ -70,13 +71,14 @@ void Villain::update(sf::Time delta)
         m_waitAnimator.play(sf::seconds(1),true);
         m_waitAnimator.update(delta);
         m_waitAnimator.animate(m_visual);
+
     }
     else
     {
-        m_dieAnimator.update(delta);
-        m_dieAnimator.animate(m_visual);
+        m_vdieAnimator.update(delta);
+        m_vdieAnimator.animate(m_visual);
 
-        if (!m_dieAnimator.isPlaying())
+        if (!m_vdieAnimator.isPlaying())
         {
             m_isDying = false;
             m_isDead = true;

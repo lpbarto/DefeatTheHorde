@@ -38,6 +38,8 @@ private:
 
     int CharNum;
 
+    bool m_isAttacking;
+
 
     bool m_isDying;
     bool m_isDead;

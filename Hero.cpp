@@ -8,6 +8,7 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
         : m_visual(texture)
         , m_isDying(false)
         , m_isDead(false)
+        , m_isAttacking(false)
 {
     setCharNum(characterNumber);
 
@@ -178,11 +179,16 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
 }
 
 int Hero::attack() {
-    m_attackAnimator.play(sf::seconds(0.5), false);
-    if(getCharNum() == 1) { //hero
-        return 10;
-    }else if (getCharNum() == 2){
-        return 5;
+
+    if(!m_isAttacking) {
+        m_attackAnimator.play(sf::seconds(1), false);
+        m_isAttacking = true;
+
+        if (getCharNum() == 1) { //hero
+            return 10;
+        } else if (getCharNum() == 2) {
+            return 5;
+        }
     }
 }
 
@@ -220,7 +226,15 @@ void Hero::update(sf::Time delta)
         this->die();
     }
 
-    if(!m_isDead && !m_isDying && getDirection() == sf::Vector2i(0,0))
+    if(m_isAttacking && !m_isDead && !m_isDying) {
+        m_attackAnimator.update(delta);
+        m_attackAnimator.animate(m_visual);
+
+        if(!m_attackAnimator.isPlaying()){
+            m_isAttacking = false;
+        }
+    }
+    else if(!m_isDead && !m_isDying && getDirection() == sf::Vector2i(0,0))
     {
         m_idleAnimator.play(sf::seconds(1),true);
         m_idleAnimator.update(delta);

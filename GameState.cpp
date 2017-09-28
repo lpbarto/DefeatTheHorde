@@ -93,25 +93,18 @@ PlayingState::PlayingState(Game* game)
 //,m_hero(game->getTexture())
 ,m_map(game->getTexture())
 ,m_hero(nullptr)
+,m_level(0)
 
 {
 
-    m_map.loadLevel("large-level-villain");
     //m_hero.move(400,50);
-
 
     m_hero = new Hero(game->getTexture(), m_cN);
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
 
-  for (auto villainPosition : m_map.getVillainPositions())
-    {
-        Villain* villain = new Villain(game->getTexture());
-        villain->setMap(&m_map);
-        villain->setPosition(m_map.mapCellToPixel(villainPosition));
+    resetToZero();
 
-        m_villains.push_back(villain);
-    }
 
 
     m_camera.setSize(sf::Vector2f(1280,960));
@@ -130,15 +123,18 @@ PlayingState::~PlayingState() {
 
 }
 
-WonState::WonState(Game* game): GameState(game){
+WonState::WonState(Game* game, GameState* playingState):
+        GameState(game)
+,m_playingState(static_cast<PlayingState*>(playingState))
+{
 
 
     m_text.setFont(game->getFont());
-    m_text.setString("You Won!!  press start to the next level");
-    m_text.setCharacterSize(14);
+    m_text.setString("You Won !");
+    m_text.setCharacterSize(50);
 
     centerOrigin(m_text);
-    m_text.setPosition(240,240);
+    m_text.setPosition(600,300);
 
 }
 
@@ -214,6 +210,8 @@ void LevelInfoState::draw(sf::RenderWindow &window) {
 
 void CharacterSelectionState::pressStart() {
 
+    getGame()->changeGameState(GameState::Won);
+
 
 }
 
@@ -266,6 +264,68 @@ void GetReadyState::draw(sf::RenderWindow &window) {
 
 }
 
+void PlayingState::resetToZero()
+{
+    m_level = 0;
+    resetCurrentLevel();
+
+}
+
+void PlayingState::resetCurrentLevel()
+{
+    m_level--;
+    loadNextLevel();
+}
+
+void PlayingState::loadNextLevel() {
+
+    m_map.loadLevel("large-level-villain");
+
+    m_level++;
+
+    int mapLevel = m_level % 3;
+
+    if(mapLevel == 0) {
+        m_map.loadLevel("large-level-villain");
+    }else if(mapLevel == 1){
+        m_map.loadLevel("large-level-villain-3");
+    } else if(mapLevel == 2){
+        m_map.loadLevel("large-level-villain-9");
+    }
+
+    for(Villain* villain : m_villains)
+        delete villain;
+
+    m_villains.clear();
+
+    for (auto villainPosition : m_map.getVillainPositions())
+    {
+        Villain* villain = new Villain(getGame()->getTexture(), m_hero);
+        villain->setMap(&m_map);
+        villain->setPosition(m_map.mapCellToPixel(villainPosition));
+
+        m_villains.push_back(villain);
+    }
+
+    moveCharacterToInitialPosition();
+
+
+}
+
+void PlayingState::moveCharacterToInitialPosition()
+{
+    m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
+
+    auto ghostPositions = m_map.getVillainPositions();
+    for (unsigned int i = 0; i < m_villains.size(); i++)
+        m_villains[i]->setPosition(m_map.mapCellToPixel(ghostPositions[i]));
+
+   // updateCameraPosition();
+}
+
+void PlayingState::updateCameraPosition() {
+
+}
 
 void PlayingState::pressA() {
 
@@ -273,7 +333,9 @@ void PlayingState::pressA() {
         if (villain->getCollisionBox().intersects(m_hero->getCollisionBox())) {
 
             int villainHP = villain->getM_hp();
+
             villain->setM_hp(villainHP -= m_hero->attack());
+
 
             if(villain->getM_hp() <= 0){
                 // villain->die();
@@ -313,9 +375,9 @@ void PlayingState::update(sf::Time delta) {
 
     m_hero->update(delta);
 
-   for (Villain* villain : m_villains)
-      villain->update(delta);
-
+   for (Villain* villain : m_villains) {
+       villain->update(delta);
+   }
     sf::Vector2f pixelPosition = m_hero->getPosition();
     sf::Vector2f offset(std::fmod(pixelPosition.x, 32), std::fmod(pixelPosition.y, 32));
     offset -= sf::Vector2f(16, 16);
@@ -326,6 +388,10 @@ void PlayingState::update(sf::Time delta) {
 
     }
 */
+
+    if(m_villains.size() == 0){
+        getGame()->changeGameState(GameState::Won);
+    }
 
 
 }
@@ -350,7 +416,17 @@ void WonState::moveStick(sf::Vector2i direction) {
 
 }
 void WonState::update(sf::Time delta) {
+/*
+    static sf::Time timeBuffer = sf::Time::Zero;
+    timeBuffer += delta;
 
+    if (timeBuffer.asSeconds() > 5)
+    {
+        m_playingState->loadNextLevel();
+
+      //  getGame()->changeGameState(GameState::Playing);
+    }
+*/
 }
 void WonState::draw(sf::RenderWindow &window) {
 

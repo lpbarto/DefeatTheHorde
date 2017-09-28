@@ -15,6 +15,11 @@ Map::Map(sf::Texture& texture)
 
 void Map::loadLevel(std::string name) {
 
+    m_mapSize = sf::Vector2i(0,0);
+    m_mapData.clear();
+    m_heroPosition = sf::Vector2i(0,0);
+    m_villainPositions.clear();
+
     sf::Image levelData;
     if (!levelData.loadFromFile("assets/levels/" + name + ".png"))
         throw std::runtime_error("Failed to load " + name + ".png");
