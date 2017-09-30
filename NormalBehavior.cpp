@@ -5,6 +5,8 @@
 #include "NormalBehavior.h"
 
 
+
 void NormalBehavior::move() const {
+
 
 }

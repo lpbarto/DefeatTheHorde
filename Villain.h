@@ -20,6 +20,8 @@ public:
     Villain(sf::Texture& texture, Hero* hero);
 
     void setBehavior(MovementStrategy *behavior);
+    void move() const;
+
 
 
 

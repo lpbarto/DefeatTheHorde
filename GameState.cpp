@@ -6,6 +6,10 @@
 #include "Game.h"
 #include <iostream>
 #include <cmath>
+#include "MovementStrategy.h"
+#include "AggressiveBehavior.h"
+#include "DefensiveBehavior.h"
+#include "NormalBehavior.h"
 
 
 template <typename T>
@@ -86,7 +90,12 @@ GetReadyState::GetReadyState(Game* game): GameState(game){
 
 }
 
+
+
 int GameState::m_cN = 0;
+
+
+
 
 PlayingState::PlayingState(Game* game)
         : GameState(game)
@@ -96,7 +105,6 @@ PlayingState::PlayingState(Game* game)
 ,m_level(0)
 
 {
-
     //m_hero.move(400,50);
 
     m_hero = new Hero(game->getTexture(), m_cN);
@@ -105,13 +113,9 @@ PlayingState::PlayingState(Game* game)
 
     resetToZero();
 
-
-
     m_camera.setSize(sf::Vector2f(1280,960));
 
    // m_camera.setCenter(m_hero->getPosition());
-
-
 }
 
 PlayingState::~PlayingState() {
@@ -304,6 +308,23 @@ void PlayingState::loadNextLevel() {
         villain->setMap(&m_map);
         villain->setPosition(m_map.mapCellToPixel(villainPosition));
 
+
+        AggressiveBehavior aggressiveBehavior;
+        NormalBehavior normalBehavior;
+        DefensiveBehavior defensiveBehavior;
+
+
+
+        int randBehavior = rand() % 2;
+        if(randBehavior == 0){
+            villain->setBehavior(&normalBehavior);
+        }else if(randBehavior == 1){
+            villain->setBehavior(&defensiveBehavior);
+        } else if(randBehavior == 2){
+            villain->setBehavior(&aggressiveBehavior);
+        }
+
+
         m_villains.push_back(villain);
     }
 
@@ -320,10 +341,22 @@ void PlayingState::moveCharacterToInitialPosition()
     for (unsigned int i = 0; i < m_villains.size(); i++)
         m_villains[i]->setPosition(m_map.mapCellToPixel(ghostPositions[i]));
 
-   // updateCameraPosition();
+   updateCameraPosition();
 }
 
 void PlayingState::updateCameraPosition() {
+
+    m_camera.setCenter(m_hero->getPosition());
+
+    if(m_camera.getCenter().x < 640)
+        m_camera.setCenter(640,m_camera.getCenter().y);
+    if(m_camera.getCenter().y < 480)
+        m_camera.setCenter(m_camera.getCenter().x, 480);
+
+    if(m_camera.getCenter().x > m_map.getSize().x * 64 - 640)
+        m_camera.setCenter(m_map.getSize().x * 64 - 640, m_camera.getCenter().y);
+    if(m_camera.getCenter().y > m_map.getSize().y * 64 - 480)
+        m_camera.setCenter(m_camera.getCenter().x, m_map.getSize().y * 64 - 480);
 
 }
 
@@ -352,26 +385,17 @@ void PlayingState::pressA() {
 
 void PlayingState::pressStart() {
 
+getGame()->changeGameState(GameState::Won);
+
 }
+
+
 void PlayingState::moveStick(sf::Vector2i direction) {
 
     m_hero->setDirection(direction);
 
 }
 void PlayingState::update(sf::Time delta) {
-
-    m_camera.setCenter(m_hero->getPosition());
-
-    if(m_camera.getCenter().x < 640)
-        m_camera.setCenter(640,m_camera.getCenter().y);
-    if(m_camera.getCenter().y < 480)
-        m_camera.setCenter(m_camera.getCenter().x, 480);
-
-    if(m_camera.getCenter().x > m_map.getSize().x * 64 - 640)
-        m_camera.setCenter(m_map.getSize().x * 64 - 640, m_camera.getCenter().y);
-    if(m_camera.getCenter().y > m_map.getSize().y * 64 - 480)
-        m_camera.setCenter(m_camera.getCenter().x, m_map.getSize().y * 64 - 480);
-
 
     m_hero->update(delta);
 
@@ -392,6 +416,8 @@ void PlayingState::update(sf::Time delta) {
     if(m_villains.size() == 0){
         getGame()->changeGameState(GameState::Won);
     }
+
+    updateCameraPosition();
 
 
 }

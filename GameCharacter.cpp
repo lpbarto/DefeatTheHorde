@@ -19,7 +19,7 @@ GameCharacter::GameCharacter()
 
 sf::FloatRect GameCharacter::getCollisionBox() const {
 
-    sf::FloatRect bounds(3, 3, 34, 34);
+    sf::FloatRect bounds(6, 6, 72, 72);
     return getTransform().transformRect(bounds);
 }
 
