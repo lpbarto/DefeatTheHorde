@@ -36,9 +36,19 @@ void Map::loadLevel(std::string name) {
 
             if (cellData == sf::Color::White) {
                 m_mapData.push_back(Empty);
-            } else if (cellData == sf::Color::Black) {
+            } else if(cellData == sf::Color(54,45,212)) {
+                m_mapData.push_back(Empty);
+            }else if(cellData == sf::Color(140,206,205)) {
+                m_mapData.push_back(Ice);
+            }else if(cellData == sf::Color(55,0,52)) {
+                m_mapData.push_back(Snow);
+            }else if(cellData == sf::Color(1,51,52)) {
+                m_mapData.push_back(Sand);
+            }else if(cellData == sf::Color(206,153,64)) {
+                m_mapData.push_back(DrySand);
+            }else if (cellData == sf::Color(0,0,0)) {
                 m_mapData.push_back(Ground);
-            } else if (cellData == sf::Color::Green) {
+            } else if (cellData == sf::Color(0,255,0)) {
                 m_mapData.push_back(Grass);
             } else if (cellData == sf::Color::Red) {
                 //the hero start the level here
@@ -56,7 +66,7 @@ void Map::loadLevel(std::string name) {
 
     m_renderTexture.create(64 * m_mapSize.x, 64 * m_mapSize.y);
 
-    m_renderTexture.clear(sf::Color(71,161,193));
+   // m_renderTexture.clear(sf::Color(71,161,193));
 
 
     sf::Sprite grass(m_texture);
@@ -64,6 +74,22 @@ void Map::loadLevel(std::string name) {
 
     sf::Sprite ground(m_texture);
     ground.setTextureRect(sf::IntRect(64,539,64,64));
+
+    sf::Sprite ice(m_texture);
+    ice.setTextureRect(sf::IntRect(256,922,64,64));
+
+    sf::Sprite snow(m_texture);
+    snow.setTextureRect(sf::IntRect(192,987,64,64));
+
+    sf::Sprite sand(m_texture);
+    sand.setTextureRect(sf::IntRect(320,1051,64,64));
+
+    sf::Sprite drysand(m_texture);
+    drysand.setTextureRect(sf::IntRect(256,1115,64,64));
+
+    sf::Sprite sky(m_texture);
+    sky.setTextureRect(sf::IntRect(475,1336,64,64));
+
 
 
 
@@ -82,6 +108,35 @@ void Map::loadLevel(std::string name) {
 
             grass.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(grass);
+
+        }
+        else if (m_mapData[i] == Sand) {
+
+            grass.setPosition(64 * position.x, 64 * position.y);
+            m_renderTexture.draw(sand);
+
+        }
+        else if (m_mapData[i] == DrySand) {
+
+            grass.setPosition(64 * position.x, 64 * position.y);
+            m_renderTexture.draw(drysand);
+
+        }
+        else if (m_mapData[i] == Snow) {
+
+            grass.setPosition(64 * position.x, 64 * position.y);
+            m_renderTexture.draw(snow);
+
+        }
+        else if (m_mapData[i] == Ice) {
+
+            grass.setPosition(64 * position.x, 64 * position.y);
+            m_renderTexture.draw(ice);
+
+        }
+        else if(m_mapData[i] == Empty){
+            sky.setPosition(64 * position.x, 64 * position.y);
+            m_renderTexture.draw(sky);
 
         }
     }
@@ -149,7 +204,10 @@ bool Map::isGrass(sf::Vector2i position) const {
     if(position.x < 0 || position.x >= m_mapSize.x)
         return true;
 
-    return m_mapData[positionToIndex(position)] == Grass;
+    if(m_mapData[positionToIndex(position)] == Grass || m_mapData[positionToIndex(position)] == Snow ||m_mapData[positionToIndex(position)] == DrySand)
+        return true;
+    else
+        return false;
 
 }
 

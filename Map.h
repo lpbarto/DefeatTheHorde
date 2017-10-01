@@ -41,6 +41,10 @@ private:
         Empty,
         Grass,
         Ground,
+        Ice,
+        Snow,
+        Sand,
+        DrySand
 
     };
 

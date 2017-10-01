@@ -14,6 +14,8 @@ Villain::Villain(sf::Texture &texture, Hero* hero)
 
     setM_hp(10);
 
+    setM_speed(80.f);
+
  /*   m_waitAnimator.addFrame(sf::IntRect(14,1823,52,85));
     m_waitAnimator.addFrame(sf::IntRect(66,1823,53,85));
     m_waitAnimator.addFrame(sf::IntRect(120,1823,53,84));
@@ -66,7 +68,8 @@ void Villain::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 void Villain::update(sf::Time delta)
 {
 
-    move();
+    //this->move();
+
 
     if(!m_isDead && !m_isDying)
     {
@@ -90,9 +93,10 @@ void Villain::update(sf::Time delta)
 }
 
 void Villain::setBehavior(MovementStrategy *behavior) {
-    m_behavior = behavior;
+    this->m_behavior = behavior;
 }
 
-void Villain::move() const {
-    m_behavior->move();
+void Villain::move() {
+    if(this->m_behavior)
+    this->m_behavior->move(this, m_hero);
 }

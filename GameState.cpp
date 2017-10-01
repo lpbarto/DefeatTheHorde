@@ -6,10 +6,9 @@
 #include "Game.h"
 #include <iostream>
 #include <cmath>
-#include "MovementStrategy.h"
-#include "AggressiveBehavior.h"
-#include "DefensiveBehavior.h"
-#include "NormalBehavior.h"
+
+
+
 
 
 template <typename T>
@@ -294,7 +293,7 @@ void PlayingState::loadNextLevel() {
     }else if(mapLevel == 1){
         m_map.loadLevel("large-level-villain-3");
     } else if(mapLevel == 2){
-        m_map.loadLevel("large-level-villain-9");
+        m_map.loadLevel("large-level-villain-6");
     }
 
     for(Villain* villain : m_villains)
@@ -308,24 +307,24 @@ void PlayingState::loadNextLevel() {
         villain->setMap(&m_map);
         villain->setPosition(m_map.mapCellToPixel(villainPosition));
 
+        m_villains.push_back(villain);
+    }
 
-        AggressiveBehavior aggressiveBehavior;
-        NormalBehavior normalBehavior;
-        DefensiveBehavior defensiveBehavior;
-
-
+    for(Villain* villain : m_villains){
 
         int randBehavior = rand() % 2;
+
         if(randBehavior == 0){
+            NormalBehavior normalBehavior;
             villain->setBehavior(&normalBehavior);
         }else if(randBehavior == 1){
+            DefensiveBehavior defensiveBehavior;
             villain->setBehavior(&defensiveBehavior);
         } else if(randBehavior == 2){
+            AggressiveBehavior aggressiveBehavior;
             villain->setBehavior(&aggressiveBehavior);
         }
 
-
-        m_villains.push_back(villain);
     }
 
     moveCharacterToInitialPosition();
@@ -385,7 +384,7 @@ void PlayingState::pressA() {
 
 void PlayingState::pressStart() {
 
-getGame()->changeGameState(GameState::Won);
+
 
 }
 
@@ -414,7 +413,8 @@ void PlayingState::update(sf::Time delta) {
 */
 
     if(m_villains.size() == 0){
-        getGame()->changeGameState(GameState::Won);
+      //  getGame()->changeGameState(GameState::Won);
+       this->loadNextLevel();
     }
 
     updateCameraPosition();

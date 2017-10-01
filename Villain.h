@@ -12,6 +12,7 @@
 #include "MovementStrategy.h"
 #include "Hero.h"
 
+class MovementStrategy;
 
 class Villain : public GameCharacter {
 
@@ -19,8 +20,8 @@ public:
 
     Villain(sf::Texture& texture, Hero* hero);
 
-    void setBehavior(MovementStrategy *behavior);
-    void move() const;
+    void setBehavior(MovementStrategy* behavior);
+    void move();
 
 
 
