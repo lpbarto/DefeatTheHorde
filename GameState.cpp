@@ -315,14 +315,14 @@ void PlayingState::loadNextLevel() {
         int randBehavior = rand() % 2;
 
         if(randBehavior == 0){
-            NormalBehavior normalBehavior;
-            villain->setBehavior(&normalBehavior);
+            NormalBehavior *normalBehavior = new NormalBehavior;
+            villain->setBehavior(normalBehavior);
         }else if(randBehavior == 1){
-            DefensiveBehavior defensiveBehavior;
-            villain->setBehavior(&defensiveBehavior);
+            DefensiveBehavior *defensiveBehavior = new DefensiveBehavior;
+            villain->setBehavior(defensiveBehavior);
         } else if(randBehavior == 2){
-            AggressiveBehavior aggressiveBehavior;
-            villain->setBehavior(&aggressiveBehavior);
+            AggressiveBehavior *aggressiveBehavior = new AggressiveBehavior;
+            villain->setBehavior(aggressiveBehavior);
         }
 
     }
@@ -401,10 +401,10 @@ void PlayingState::update(sf::Time delta) {
    for (Villain* villain : m_villains) {
        villain->update(delta);
    }
-    sf::Vector2f pixelPosition = m_hero->getPosition();
+/*    sf::Vector2f pixelPosition = m_hero->getPosition();
     sf::Vector2f offset(std::fmod(pixelPosition.x, 32), std::fmod(pixelPosition.y, 32));
     offset -= sf::Vector2f(16, 16);
-/*
+
     if(offset.x <= 2 && offset.x >= -2 && offset.y <= 2 && offset.y >= -2){
 
         sf::Vector2i cellPosition = m_map.mapPixelToCell(pixelPosition);
