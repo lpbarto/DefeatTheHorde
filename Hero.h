@@ -9,6 +9,9 @@
 #include "GameCharacter.h"
 #include "Animator.h"
 #include "Hero.h"
+#include "Observer.h"
+#include "Event.h"
+#include <vector>
 
 
 
@@ -32,6 +35,14 @@ public:
 
 
 
+    void addObserver(Observer* observer);
+    void removeObserver(Observer* observer);
+
+    void notify(Event event);
+
+
+
+
 private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -50,6 +61,15 @@ private:
     Animator m_idleAnimator;
     Animator m_jumpAnimator;
     Animator m_attackAnimator;
+
+    //Observer
+
+    //Observer* observers_[MAX_OBSERVERS];
+    std::vector<class Observer*> observerList;
+
+
+
+
 
 
 

@@ -4,34 +4,30 @@
 
 #include "Villain.h"
 
-Villain::Villain(sf::Texture &texture, Hero* hero)
-        : m_visual(texture)
-        , m_isDying(false)
-        , m_isDead(false)
-        , m_hero(hero)
-{
-    setOrigin(30,50);
+Villain::Villain(sf::Texture &texture, Hero *hero)
+        : m_visual(texture), m_isDying(false), m_isDead(false), m_hero(hero) {
+    setOrigin(30, 50);
 
     setM_hp(10);
 
     setM_speed(80.f);
 
- /*   m_waitAnimator.addFrame(sf::IntRect(14,1823,52,85));
-    m_waitAnimator.addFrame(sf::IntRect(66,1823,53,85));
-    m_waitAnimator.addFrame(sf::IntRect(120,1823,53,84));
-    m_waitAnimator.addFrame(sf::IntRect(178,1824,54,84));
-    m_waitAnimator.addFrame(sf::IntRect(233,1824,54,84));
-    m_waitAnimator.addFrame(sf::IntRect(289,1824,54,84));
-    m_waitAnimator.addFrame(sf::IntRect(350,1824,54,84));
-    m_waitAnimator.addFrame(sf::IntRect(408,1824,55,84));
-    m_waitAnimator.addFrame(sf::IntRect(465,1824,55,84));
-    m_waitAnimator.addFrame(sf::IntRect(525,1824,56,83));
-    m_waitAnimator.addFrame(sf::IntRect(13,1918,56,85));
-    m_waitAnimator.addFrame(sf::IntRect(71,1919,55,84));
-    m_waitAnimator.addFrame(sf::IntRect(135,1918,54,84));
-    */
-    m_waitAnimator.addFrame(sf::IntRect(192,1918,54,85));
-    m_waitAnimator.addFrame(sf::IntRect(249,1918,54,85));
+    /*   m_waitAnimator.addFrame(sf::IntRect(14,1823,52,85));
+       m_waitAnimator.addFrame(sf::IntRect(66,1823,53,85));
+       m_waitAnimator.addFrame(sf::IntRect(120,1823,53,84));
+       m_waitAnimator.addFrame(sf::IntRect(178,1824,54,84));
+       m_waitAnimator.addFrame(sf::IntRect(233,1824,54,84));
+       m_waitAnimator.addFrame(sf::IntRect(289,1824,54,84));
+       m_waitAnimator.addFrame(sf::IntRect(350,1824,54,84));
+       m_waitAnimator.addFrame(sf::IntRect(408,1824,55,84));
+       m_waitAnimator.addFrame(sf::IntRect(465,1824,55,84));
+       m_waitAnimator.addFrame(sf::IntRect(525,1824,56,83));
+       m_waitAnimator.addFrame(sf::IntRect(13,1918,56,85));
+       m_waitAnimator.addFrame(sf::IntRect(71,1919,55,84));
+       m_waitAnimator.addFrame(sf::IntRect(135,1918,54,84));
+       */
+    m_waitAnimator.addFrame(sf::IntRect(192, 1918, 54, 85));
+    m_waitAnimator.addFrame(sf::IntRect(249, 1918, 54, 85));
 
     m_waitAnimator.play(sf::seconds(1.2), true);
 
@@ -40,7 +36,7 @@ Villain::Villain(sf::Texture &texture, Hero* hero)
 
 void Villain::die() {
 
-    if(!m_isDying){
+    if (!m_isDying) {
         m_vdieAnimator.play(sf::seconds(1), false);
         m_isDying = true;
     }
@@ -56,7 +52,7 @@ bool Villain::isDead() const {
 }
 
 
-void Villain::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Villain::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
     states.transform *= getTransform();
 
@@ -65,26 +61,21 @@ void Villain::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 
-void Villain::update(sf::Time delta)
-{
+void Villain::update(sf::Time delta) {
 
-    //this->move();
+    this->move();
 
 
-    if(!m_isDead && !m_isDying)
-    {
-        m_waitAnimator.play(sf::seconds(1),true);
+    if (!m_isDead && !m_isDying) {
+        m_waitAnimator.play(sf::seconds(1), true);
         m_waitAnimator.update(delta);
         m_waitAnimator.animate(m_visual);
 
-    }
-    else
-    {
+    } else {
         m_vdieAnimator.update(delta);
         m_vdieAnimator.animate(m_visual);
 
-        if (!m_vdieAnimator.isPlaying())
-        {
+        if (!m_vdieAnimator.isPlaying()) {
             m_isDying = false;
             m_isDead = true;
         }
@@ -97,6 +88,6 @@ void Villain::setBehavior(MovementStrategy *behavior) {
 }
 
 void Villain::move() {
-    if(this->m_behavior)
-    this->m_behavior->move(this, m_hero);
+    if (this->m_behavior)
+        this->m_behavior->move(this, m_hero);
 }

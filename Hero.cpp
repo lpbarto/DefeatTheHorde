@@ -185,7 +185,7 @@ int Hero::attack() {
         m_isAttacking = true;
 
         if (getCharNum() == 1) { //hero
-            return 10;
+            return 3;
         } else if (getCharNum() == 2) {
             return 5;
         }
@@ -260,6 +260,7 @@ void Hero::update(sf::Time delta)
         }
     }
     GameCharacter::update(delta);
+    notify(Runner);
 }
 
 
@@ -269,4 +270,26 @@ void Hero::setCharNum(int num) {
 
 int Hero::getCharNum() {
     return CharNum;
+}
+
+
+void Hero::addObserver(Observer *observer) {
+
+        observerList.push_back(observer);
+
+}
+
+void Hero::removeObserver(Observer *observer) {
+
+    observerList.erase(std::remove(observerList.begin(), observerList.end(), observer), observerList.end());
+
+}
+
+void Hero::notify(Event event) {
+
+    for (int i = 0; observerList.size(); i++)
+    {
+        observerList[i]->onNotify(this, event);
+    }
+
 }

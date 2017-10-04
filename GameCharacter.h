@@ -34,6 +34,9 @@ public:
     float getM_speed() const;
 
     void setM_speed(float m_speed);
+
+    float getPixelTraveled();
+
     
 
 private:
@@ -45,6 +48,8 @@ private:
 
     sf::Vector2i m_currentDirection;
     sf::Vector2i m_nextDirection;
+
+    float m_pixelTraveled;
 
 
 };

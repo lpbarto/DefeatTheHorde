@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_subdirectory(test)
 
-set(SOURCE_FILES main.cpp Game.cpp Game.h GameState.cpp GameState.h GameCharacter.cpp GameCharacter.h Villain.cpp Villain.h Hero.cpp Hero.h Animator.cpp Animator.h Map.cpp Map.h GameState.cpp GameState.h MovementStrategy.cpp MovementStrategy.h)
+set(SOURCE_FILES main.cpp Game.cpp Game.h GameState.cpp GameState.h GameCharacter.cpp GameCharacter.h Villain.cpp Villain.h Hero.cpp Hero.h Animator.cpp Animator.h Map.cpp Map.h GameState.cpp GameState.h MovementStrategy.cpp MovementStrategy.h Observer.cpp Observer.h Event.h)
 add_executable(DefeatTheHorde ${SOURCE_FILES})
 
 add_library(core ${SOURCE_FILES} test/runAllTests.cpp)

@@ -110,6 +110,9 @@ PlayingState::PlayingState(Game* game)
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
 
+    Achievements *achievements = new Achievements;
+    m_hero->addObserver(achievements);
+
     resetToZero();
 
     m_camera.setSize(sf::Vector2f(1280,960));
@@ -373,6 +376,7 @@ void PlayingState::pressA() {
                 // villain->die();
 
                 m_villains.erase(std::find(m_villains.begin(), m_villains.end(), villain));
+                m_hero->notify(Terminator);
 
             }
 

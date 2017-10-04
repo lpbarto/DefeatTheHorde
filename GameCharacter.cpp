@@ -11,6 +11,7 @@ GameCharacter::GameCharacter()
 ,m_speed(100.f)
 ,m_currentDirection(0,0)
 ,m_nextDirection(0,0)
+,m_pixelTraveled(0.f)
 
 
 {
@@ -60,11 +61,16 @@ sf::Vector2i GameCharacter::getDirection() const {
     return m_currentDirection;
 }
 
+float GameCharacter::getPixelTraveled() {
+    return m_pixelTraveled;
+}
+
 void GameCharacter::update(sf::Time delta) {
 
     sf::Vector2f pixelPosition = getPosition();
 
     float pixelTraveled = getM_speed() * delta.asSeconds();
+    m_pixelTraveled = pixelTraveled;
 
     sf::Vector2f nextPixelPosition = pixelPosition + sf::Vector2f(m_currentDirection) * pixelTraveled;
     setPosition(nextPixelPosition);
