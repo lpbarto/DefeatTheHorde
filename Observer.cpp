@@ -3,6 +3,9 @@
 //
 
 #include "Observer.h"
+#include <math.h>
+
+Achievements::Achievements():heroKills(0),pixelTraveled(0) {}
 
 void Achievements::onNotify(Hero* hero, Event event) {
 
@@ -10,8 +13,10 @@ void Achievements::onNotify(Hero* hero, Event event) {
         switch (event)
         {
             case Runner:
-                setPixelTraveled(getPixelTraveled() + hero->getPixelTraveled());
-                if (getPixelTraveled() >= 1000)
+                pxTraveled = abs(getCurrentPxPosition() - hero->getNextPixelPosition());
+                setPixelTraveled(getPixelTraveled() + pxTraveled);
+                setCurrentPxPosition(hero->getNextPixelPosition());
+                if (getPixelTraveled() >= 10000)
                 {
                     unlock(Runner);
                 }
@@ -51,4 +56,12 @@ float Achievements::getPixelTraveled() {
 
 void Achievements::setPixelTraveled(float px) {
     pixelTraveled = px;
+}
+
+float Achievements::getCurrentPxPosition() {
+    return currentPxPosition;
+}
+
+void Achievements::setCurrentPxPosition(float pos) {
+    currentPxPosition = pos;
 }

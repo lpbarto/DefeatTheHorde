@@ -13,6 +13,7 @@
 #include "Event.h"
 #include <vector>
 
+class Observer;
 
 
 class Hero : public GameCharacter {

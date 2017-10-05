@@ -24,18 +24,23 @@ public:
 class Achievements : public Observer
 {
 public:
+    Achievements();
     virtual void onNotify(Hero* hero, Event event);
 
     int getHeroKills();
     void setHeroKills(int k);
     float getPixelTraveled();
     void setPixelTraveled(float px);
+    float getCurrentPxPosition();
+    void setCurrentPxPosition(float pos);
 
 
 private:
     void unlock(Event event);
     int heroKills;
     float pixelTraveled;
+    float currentPxPosition;
+    float pxTraveled;
 };
 
 #endif //DEFEATTHEHORDE_OBSERVER_H

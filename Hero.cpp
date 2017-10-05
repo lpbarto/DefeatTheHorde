@@ -180,7 +180,7 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
 
 int Hero::attack() {
 
-    if(!m_isAttacking) {
+    if (!m_isAttacking) {
         m_attackAnimator.play(sf::seconds(1), false);
         m_isAttacking = true;
 
@@ -189,8 +189,11 @@ int Hero::attack() {
         } else if (getCharNum() == 2) {
             return 5;
         }
+    } else{
+        return 0;
     }
 }
+
 
 void Hero::die() {
 
@@ -260,7 +263,7 @@ void Hero::update(sf::Time delta)
         }
     }
     GameCharacter::update(delta);
-    notify(Runner);
+    this->notify(Runner);
 }
 
 
@@ -287,9 +290,9 @@ void Hero::removeObserver(Observer *observer) {
 
 void Hero::notify(Event event) {
 
-    for (int i = 0; observerList.size(); i++)
-    {
-        observerList[i]->onNotify(this, event);
-    }
+   // for (int i = 0; observerList.size(); i++)
+   // {
+        observerList[0]->onNotify(this, event);
+   // }
 
 }

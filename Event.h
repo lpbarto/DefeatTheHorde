@@ -7,7 +7,7 @@
 
 enum Event{
     Runner,
-    Terminator;
+    Terminator
 
 };
 

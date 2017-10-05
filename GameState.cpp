@@ -106,6 +106,7 @@ PlayingState::PlayingState(Game* game)
 {
     //m_hero.move(400,50);
 
+
     m_hero = new Hero(game->getTexture(), m_cN);
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
