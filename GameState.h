@@ -135,6 +135,13 @@ private:
     std::vector<Villain*> m_villains;
 
     sf::View m_camera;
+    sf::RenderTexture m_scene;
+
+    sf::Text m_HeroHpText;
+    sf::Text m_levelText;
+    sf::Text m_remainingVillainsText;
+    sf::Sprite m_runnerBadge;
+    sf::Sprite m_killerBadge;
 
 };
 

@@ -21,6 +21,7 @@ public:
     sf::Font& getFont();
     sf::Texture& getLogo();
     sf::Texture& getTexture();
+    sf::Texture& getTextureBadge();
 
 
 
@@ -36,6 +37,7 @@ private:
     sf::Font m_font;
     sf::Texture m_logo;
     sf::Texture m_texture;
+    sf::Texture m_textureBadge;
 
 
 

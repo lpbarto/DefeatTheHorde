@@ -117,6 +117,29 @@ PlayingState::PlayingState(Game* game)
     resetToZero();
 
     m_camera.setSize(sf::Vector2f(1280,960));
+    m_scene.create(1280,960);
+
+    m_HeroHpText.setFont(game->getFont());
+    m_HeroHpText.setCharacterSize(40);
+    m_HeroHpText.setPosition(10, 960);
+
+    m_levelText.setFont(game->getFont());
+    m_levelText.setCharacterSize(40);
+    m_levelText.setPosition(160, 960);
+
+    m_remainingVillainsText.setFont(game->getFont());
+    m_remainingVillainsText.setCharacterSize(40);
+    m_remainingVillainsText.setPosition(350, 960);
+
+
+    m_runnerBadge.setTexture(getGame()->getTextureBadge());
+    m_runnerBadge.setTextureRect(sf::IntRect(10,7,111,42));
+    m_runnerBadge.setPosition(sf::Vector2f(700, 960));
+
+    m_killerBadge.setTexture(getGame()->getTextureBadge());
+    m_killerBadge.setTextureRect(sf::IntRect(151,5,129,34));
+    m_killerBadge.setPosition(sf::Vector2f(900, 961));
+
 
    // m_camera.setCenter(m_hero->getPosition());
 }
@@ -290,7 +313,10 @@ void PlayingState::loadNextLevel() {
 
     m_level++;
 
+
+
     int mapLevel = m_level % 3;
+    m_levelText.setString("level " + std::to_string(mapLevel));
 
     if(mapLevel == 0) {
         m_map.loadLevel("large-level-villain");
@@ -330,6 +356,8 @@ void PlayingState::loadNextLevel() {
         }
 
     }
+
+    m_remainingVillainsText.setString("Villains: " + std::to_string(m_villains.size()));
 
     moveCharacterToInitialPosition();
 
@@ -377,7 +405,8 @@ void PlayingState::pressA() {
                 // villain->die();
 
                 m_villains.erase(std::find(m_villains.begin(), m_villains.end(), villain));
-                m_hero->notify(Terminator);
+                m_remainingVillainsText.setString("Villains: " + std::to_string(m_villains.size()));
+                m_hero->notify(Killer);
 
             }
 
@@ -417,10 +446,12 @@ void PlayingState::update(sf::Time delta) {
     }
 */
 
-    if(m_villains.size() == 0){
+    if(m_villains.empty()){
       //  getGame()->changeGameState(GameState::Won);
        this->loadNextLevel();
     }
+
+    m_HeroHpText.setString("HP:" + std::to_string(m_hero->getM_hp()));
 
     updateCameraPosition();
 
@@ -428,12 +459,25 @@ void PlayingState::update(sf::Time delta) {
 }
 void PlayingState::draw(sf::RenderWindow &window) {
 
-    window.setView(m_camera);
-    window.draw(m_map);
-    window.draw(*m_hero);
+    m_scene.setView(m_camera);
+    m_scene.draw(m_map);
+    m_scene.draw(*m_hero);
 
     for (Villain* villain : m_villains)
-        window.draw(*villain);
+        m_scene.draw(*villain);
+
+    m_scene.display();
+
+    window.draw(sf::Sprite(m_scene.getTexture()));
+
+    window.draw(m_HeroHpText);
+    window.draw(m_levelText);
+    window.draw(m_remainingVillainsText);
+
+     if(m_hero->runnerBadgeVisible)
+     window.draw(m_runnerBadge);
+      if(m_hero->killerBadgeVisible)
+      window.draw(m_killerBadge);
 
 
 }

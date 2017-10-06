@@ -6,7 +6,7 @@
 #include <iostream>
 
 Game::Game()
-        :m_window(sf::VideoMode(1280,960), "DefeatTheHorde") //1280,960
+        :m_window(sf::VideoMode(1280,1000), "DefeatTheHorde") //1280,960
 {
     if(!m_font.loadFromFile("assets/3Dventure.ttf"))
         throw std::runtime_error("unable to load font file");
@@ -15,6 +15,9 @@ Game::Game()
         throw std::runtime_error("unable to load the logo file");
 
     if(!m_texture.loadFromFile("assets/texture.png"))
+        throw std::runtime_error("unable to load texture file");
+
+    if(!m_textureBadge.loadFromFile("assets/textureBadge.png"))
         throw std::runtime_error("unable to load texture file");
 
 
@@ -120,3 +123,7 @@ sf::Texture& Game::getTexture() {
     return m_texture;
 }
 
+
+sf::Texture& Game::getTextureBadge() {
+    return m_textureBadge;
+}

@@ -18,15 +18,15 @@ void Achievements::onNotify(Hero* hero, Event event) {
                 setCurrentPxPosition(hero->getNextPixelPosition());
                 if (getPixelTraveled() >= 10000)
                 {
-                    unlock(Runner);
+                  hero->runnerBadgeVisible = true;
                 }
                 break;
 
-            case Terminator:
+            case Killer:
                 setHeroKills(getHeroKills() + 1);
                 if(getHeroKills() == 3)
                 {
-                    unlock(Terminator);
+                    hero->killerBadgeVisible = true;
                 }
                 break;
 
@@ -36,7 +36,7 @@ void Achievements::onNotify(Hero* hero, Event event) {
 
 void Achievements::unlock(Event event) {
     {
-        // Unlock if not already unlocked...
+
     }
 
 }

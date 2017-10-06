@@ -9,6 +9,9 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
         , m_isDying(false)
         , m_isDead(false)
         , m_isAttacking(false)
+        , runnerBadgeVisible(false)
+        , killerBadgeVisible(false)
+
 {
     setCharNum(characterNumber);
 

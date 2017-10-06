@@ -25,6 +25,10 @@ public:
 
     void die();
 
+    bool runnerBadgeVisible;
+    bool killerBadgeVisible;
+
+
     bool isDying() const;
     bool isDead() const;
 
