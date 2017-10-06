@@ -103,6 +103,7 @@ PlayingState::PlayingState(Game* game)
 ,m_hero(nullptr)
 ,m_level(0)
 
+
 {
     //m_hero.move(400,50);
 
@@ -113,6 +114,7 @@ PlayingState::PlayingState(Game* game)
 
     Achievements *achievements = new Achievements;
     m_hero->addObserver(achievements);
+
 
     resetToZero();
 
@@ -331,27 +333,46 @@ void PlayingState::loadNextLevel() {
 
     m_villains.clear();
 
+    VillainFactory* factory = new VillainFactory;
+
     for (auto villainPosition : m_map.getVillainPositions())
     {
-        Villain* villain = new Villain(getGame()->getTexture(), m_hero);
-        villain->setMap(&m_map);
-        villain->setPosition(m_map.mapCellToPixel(villainPosition));
+       int randVillain = rand() % 6;
 
-        m_villains.push_back(villain);
+
+        if(randVillain % 2 == 0) {
+            Villain* villain = factory->createVillain(getGame()->getTexture(), m_hero, "zombie");
+
+            villain->setMap(&m_map);
+            villain->setPosition(m_map.mapCellToPixel(villainPosition));
+
+            m_villains.push_back(villain);
+        }else if(randVillain % 2 != 0) {
+           Villain* villain = factory->createVillain(getGame()->getTexture(), m_hero, "robot");
+
+            villain->setMap(&m_map);
+            villain->setPosition(m_map.mapCellToPixel(villainPosition));
+
+            m_villains.push_back(villain);
+        }
+
     }
 
     for(Villain* villain : m_villains){
 
         int randBehavior = rand() % 2;
+        NormalBehavior *normalBehavior = new NormalBehavior;
+        DefensiveBehavior *defensiveBehavior = new DefensiveBehavior;
+        AggressiveBehavior *aggressiveBehavior = new AggressiveBehavior;
 
         if(randBehavior == 0){
-            NormalBehavior *normalBehavior = new NormalBehavior;
+
             villain->setBehavior(normalBehavior);
         }else if(randBehavior == 1){
-            DefensiveBehavior *defensiveBehavior = new DefensiveBehavior;
+
             villain->setBehavior(defensiveBehavior);
         } else if(randBehavior == 2){
-            AggressiveBehavior *aggressiveBehavior = new AggressiveBehavior;
+
             villain->setBehavior(aggressiveBehavior);
         }
 

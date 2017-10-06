@@ -56,7 +56,7 @@ void Map::loadLevel(std::string name) {
                 m_mapData.push_back(Empty);
             }else if(cellData == sf::Color(50,50,50)){
                 //villain positions
-                m_villainPositions.push_back(sf::Vector2i(x,y));
+                m_villainPositions.emplace_back(x,y);
                 m_mapData.push_back(Empty);
             } else{
                 m_mapData.push_back(Empty);
@@ -204,10 +204,7 @@ bool Map::isGrass(sf::Vector2i position) const {
     if(position.x < 0 || position.x >= m_mapSize.x)
         return true;
 
-    if(m_mapData[positionToIndex(position)] == Grass || m_mapData[positionToIndex(position)] == Snow ||m_mapData[positionToIndex(position)] == DrySand)
-        return true;
-    else
-        return false;
+    return m_mapData[positionToIndex(position)] == Grass || m_mapData[positionToIndex(position)] == Snow || m_mapData[positionToIndex(position)] == DrySand;
 
 }
 

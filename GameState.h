@@ -9,6 +9,7 @@
 #include "Hero.h"
 #include "Villain.h"
 #include "Map.h"
+#include "VillainFactory.h"
 
 class Game;
 

@@ -18,7 +18,7 @@ class Villain : public GameCharacter {
 
 public:
 
-    Villain(sf::Texture& texture, Hero* hero);
+    Villain(sf::Texture& texture, Hero* hero, std::string type);
 
     void setBehavior(MovementStrategy* behavior);
     void move();
