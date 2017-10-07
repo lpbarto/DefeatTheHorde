@@ -338,7 +338,7 @@ void PlayingState::loadNextLevel() {
 
     for (auto villainPosition : m_map.getVillainPositions())
     {
-       int randVillain = rand() % 6;
+       int randVillain = rand();
 
 
         if(randVillain % 2 == 0) {

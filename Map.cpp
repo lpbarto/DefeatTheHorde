@@ -95,6 +95,15 @@ void Map::loadLevel(std::string name) {
 
     m_renderTexture.display();
 
+
+    if(name == "large-level-villain-3"){
+        grass=snow;
+        ground=ice;
+    }else if(name == "large-level-villain-6"){
+        grass=drysand;
+        ground=sand;
+    }
+
     for (unsigned int i = 0; i < m_mapData.size(); i++) {
         sf::Vector2i position = indexToPosition(i);
 

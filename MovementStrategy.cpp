@@ -36,7 +36,7 @@ void NormalBehavior::move(Villain* villain, Hero* hero) {
 
 void DefensiveBehavior::move(Villain* villain, Hero* hero) {
 
-    villain->setM_speed(villain->getM_speed() / 2);
+    villain->setM_speed(40.f);
     villain->setM_attackSpeed(0.8);
 
 
@@ -66,7 +66,7 @@ void DefensiveBehavior::move(Villain* villain, Hero* hero) {
 
 void AggressiveBehavior::move(Villain* villain, Hero* hero) {
 
-    villain->setM_speed(villain->getM_speed() * 3);
+    villain->setM_speed(120.f);
     villain->setM_attackSpeed(2.3);
 
 

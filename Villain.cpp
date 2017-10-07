@@ -116,14 +116,6 @@ void Villain::update(sf::Time delta) {
         m_waitAnimator.update(delta);
         m_waitAnimator.animate(m_visual);
 
-    } else {
-        m_vdieAnimator.update(delta);
-        m_vdieAnimator.animate(m_visual);
-
-        if (!m_vdieAnimator.isPlaying()) {
-            m_isDying = false;
-            m_isDead = true;
-        }
     }
     GameCharacter::update(delta);
 }
