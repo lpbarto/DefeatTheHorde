@@ -22,8 +22,10 @@ public:
 
     void setBehavior(MovementStrategy* behavior);
     void move();
+    void villainAttack();
 
-
+    void setAttacking(bool attacking);
+    bool getAttacking();
 
 
     void die();
@@ -44,9 +46,12 @@ private:
     bool m_isDying;
     bool m_isDead;
 
+    bool m_isAttacking;
+
 
     Animator m_vdieAnimator;
     Animator m_waitAnimator;
+    Animator m_vattackAnimator;
 
     MovementStrategy* m_behavior;
 

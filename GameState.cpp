@@ -174,11 +174,11 @@ LostState::LostState(Game* game): GameState(game){
 
 
     m_text.setFont(game->getFont());
-    m_text.setString("You Lost :(  press start to try again");
-    m_text.setCharacterSize(14);
+    m_text.setString("You Lost :( ");
+    m_text.setCharacterSize(50);
 
     centerOrigin(m_text);
-    m_text.setPosition(240,240);
+    m_text.setPosition(600,300);
 
 }
 
@@ -318,6 +318,7 @@ void PlayingState::loadNextLevel() {
 
 
     int mapLevel = m_level % 3;
+
     m_levelText.setString("level " + std::to_string(mapLevel));
 
     if(mapLevel == 0) {
@@ -471,6 +472,9 @@ void PlayingState::update(sf::Time delta) {
       //  getGame()->changeGameState(GameState::Won);
        this->loadNextLevel();
     }
+
+    if(m_hero->isDead())
+        getGame()->changeGameState(GameState::Lost);
 
     m_HeroHpText.setString("HP:" + std::to_string(m_hero->getM_hp()));
 

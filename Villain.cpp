@@ -5,7 +5,7 @@
 #include "Villain.h"
 
 Villain::Villain(sf::Texture &texture, Hero *hero, std::string type)
-        : m_visual(texture), m_isDying(false), m_isDead(false), m_hero(hero) {
+        : m_visual(texture), m_isDying(false), m_isDead(false), m_hero(hero), m_isAttacking(false) {
 
     if(type == "zombie"){
 
@@ -31,6 +31,10 @@ Villain::Villain(sf::Texture &texture, Hero *hero, std::string type)
            */
         m_waitAnimator.addFrame(sf::IntRect(192, 1918, 54, 85));
         m_waitAnimator.addFrame(sf::IntRect(249, 1918, 54, 85));
+
+
+        m_vattackAnimator.addFrame(sf::IntRect(196,1579,64,79));
+        m_vattackAnimator.addFrame(sf::IntRect(274,1578,62,79));
 
 
     }else if(type == "robot"){
@@ -59,6 +63,9 @@ Villain::Villain(sf::Texture &texture, Hero *hero, std::string type)
         m_waitAnimator.addFrame(sf::IntRect(441, 2701, 50, 84));
        // m_waitAnimator.addFrame(sf::IntRect(192, 1918, 54, 85));
         //m_waitAnimator.addFrame(sf::IntRect(249, 1918, 54, 85));
+
+        m_vattackAnimator.addFrame(sf::IntRect(387, 2700, 50, 85));
+        m_vattackAnimator.addFrame(sf::IntRect(441, 2701, 50, 84));
 
 
     }
@@ -101,6 +108,9 @@ void Villain::update(sf::Time delta) {
     this->move();
 
 
+   this->villainAttack();
+    m_isAttacking=false;
+
     if (!m_isDead && !m_isDying) {
         m_waitAnimator.play(sf::seconds(1), true);
         m_waitAnimator.update(delta);
@@ -125,4 +135,21 @@ void Villain::setBehavior(MovementStrategy *behavior) {
 void Villain::move() {
     if (this->m_behavior)
         this->m_behavior->move(this, m_hero);
+}
+
+void Villain::villainAttack() {
+    float damage = this->getM_attackSpeed() * 5;
+    if(m_isAttacking){
+       m_hero->setM_hp(m_hero->getM_hp() - static_cast<int>(damage));
+    }
+
+
+}
+
+bool Villain::getAttacking() {
+    return m_isAttacking;
+}
+
+void Villain::setAttacking(bool attacking) {
+    m_isAttacking = attacking;
 }

@@ -3,20 +3,32 @@
 //
 
 #include "MovementStrategy.h"
+#include <math.h>
 
 
 void NormalBehavior::move(Villain* villain, Hero* hero) {
 
-    if(hero->getPosition().x < villain->getPosition().x){
+    villain->setM_attackSpeed(1);
 
-        villain->setDirection(sf::Vector2i(-1,0));
+    if(fabs(villain->getPosition().x - hero->getPosition().x) <= 40 ){
 
-    }else if (hero->getPosition().x > villain->getPosition().x){
+        villain->setDirection(sf::Vector2i(0,0));
+        int attackProbability = rand() % 100;
+        villain->setAttacking(attackProbability == 0);
 
-        villain->setDirection(sf::Vector2i(1,0));
+    }else{
+
+        if(hero->getPosition().x < villain->getPosition().x){
+
+            villain->setDirection(sf::Vector2i(-1,0));
+
+        }else if (hero->getPosition().x > villain->getPosition().x){
+
+            villain->setDirection(sf::Vector2i(1,0));
+
+        }
 
     }
-
 
 }
 
@@ -25,14 +37,26 @@ void NormalBehavior::move(Villain* villain, Hero* hero) {
 void DefensiveBehavior::move(Villain* villain, Hero* hero) {
 
     villain->setM_speed(villain->getM_speed() / 2);
+    villain->setM_attackSpeed(0.8);
 
-    if(hero->getPosition().x < villain->getPosition().x){
 
-        villain->setDirection(sf::Vector2i(-1,0));
+    if(fabs(villain->getPosition().x - hero->getPosition().x) <= 40 ){
 
-    }else if (hero->getPosition().x > villain->getPosition().x){
+        villain->setDirection(sf::Vector2i(0,0));
+        int attackProbability = rand() % 100;
+        villain->setAttacking(attackProbability == 0);
 
-        villain->setDirection(sf::Vector2i(1,0));
+    }else{
+
+        if(hero->getPosition().x < villain->getPosition().x){
+
+            villain->setDirection(sf::Vector2i(-1,0));
+
+        }else if (hero->getPosition().x > villain->getPosition().x){
+
+            villain->setDirection(sf::Vector2i(1,0));
+
+        }
 
     }
 
@@ -42,15 +66,27 @@ void DefensiveBehavior::move(Villain* villain, Hero* hero) {
 
 void AggressiveBehavior::move(Villain* villain, Hero* hero) {
 
-   villain->setM_speed(villain->getM_speed() * 2);
+    villain->setM_speed(villain->getM_speed() * 3);
+    villain->setM_attackSpeed(2.3);
 
-    if(hero->getPosition().x < villain->getPosition().x){
 
-        villain->setDirection(sf::Vector2i(-1,0));
+    if(fabs(villain->getPosition().x - hero->getPosition().x) <= 40 ){
 
-    }else if (hero->getPosition().x > villain->getPosition().x){
+        villain->setDirection(sf::Vector2i(0,0));
+        int attackProbability = rand() % 100;
+        villain->setAttacking(attackProbability == 0);
 
-        villain->setDirection(sf::Vector2i(1,0));
+    }else{
+
+        if(hero->getPosition().x < villain->getPosition().x){
+
+            villain->setDirection(sf::Vector2i(-1,0));
+
+        }else if (hero->getPosition().x > villain->getPosition().x){
+
+            villain->setDirection(sf::Vector2i(1,0));
+
+        }
 
     }
 

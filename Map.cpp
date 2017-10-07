@@ -29,27 +29,25 @@ void Map::loadLevel(std::string name) {
     if (m_mapSize.x < 20 || m_mapSize.y < 15)
         throw std::runtime_error("the loaded level is too small");
 
+
     for (unsigned int y = 0; y < m_mapSize.y; y++) {
         for (unsigned int x = 0; x < m_mapSize.x; x++) {
 
             sf::Color cellData = levelData.getPixel(x, y);
 
+
             if (cellData == sf::Color::White) {
                 m_mapData.push_back(Empty);
-            } else if(cellData == sf::Color(54,45,212)) {
+
+            } else if(cellData == sf::Color(908973311)) {
                 m_mapData.push_back(Empty);
-            }else if(cellData == sf::Color(140,206,205)) {
-                m_mapData.push_back(Ice);
-            }else if(cellData == sf::Color(55,0,52)) {
-                m_mapData.push_back(Snow);
-            }else if(cellData == sf::Color(1,51,52)) {
-                m_mapData.push_back(Sand);
-            }else if(cellData == sf::Color(206,153,64)) {
-                m_mapData.push_back(DrySand);
+
             }else if (cellData == sf::Color(0,0,0)) {
                 m_mapData.push_back(Ground);
+
             } else if (cellData == sf::Color(0,255,0)) {
                 m_mapData.push_back(Grass);
+
             } else if (cellData == sf::Color::Red) {
                 //the hero start the level here
                 m_heroPosition = sf::Vector2i(x, y);
@@ -61,6 +59,8 @@ void Map::loadLevel(std::string name) {
             } else{
                 m_mapData.push_back(Empty);
             }
+
+
         }
     }
 
@@ -112,25 +112,25 @@ void Map::loadLevel(std::string name) {
         }
         else if (m_mapData[i] == Sand) {
 
-            grass.setPosition(64 * position.x, 64 * position.y);
+            sand.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(sand);
 
         }
         else if (m_mapData[i] == DrySand) {
 
-            grass.setPosition(64 * position.x, 64 * position.y);
+            drysand.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(drysand);
 
         }
         else if (m_mapData[i] == Snow) {
 
-            grass.setPosition(64 * position.x, 64 * position.y);
+            snow.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(snow);
 
         }
         else if (m_mapData[i] == Ice) {
 
-            grass.setPosition(64 * position.x, 64 * position.y);
+            ice.setPosition(64 * position.x, 64 * position.y);
             m_renderTexture.draw(ice);
 
         }
