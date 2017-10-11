@@ -23,8 +23,6 @@ public:
     sf::Texture& getTexture();
     sf::Texture& getTextureBadge();
 
-
-
     void changeGameState(GameState::State gameState);
 
 

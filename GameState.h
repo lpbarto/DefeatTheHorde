@@ -17,11 +17,8 @@ class GameState {
 public:
     enum State{
         Wellcome,
-        LevelInfo,
         CharacterSelection,
-        GetReady,
         Playing,
-        Won,
         Lost
     };
 
@@ -61,20 +58,6 @@ private:
     bool m_displayText;
 };
 
-class LevelInfoState : public GameState {
-
-public:
-    LevelInfoState (Game* game);
-    virtual void pressStart();
-    virtual void moveStick(sf::Vector2i direction);
-    virtual void update(sf::Time delta);
-    virtual void draw(sf::RenderWindow& window);
-
-private:
-
-    sf::Text m_text;
-
-};
 
 class CharacterSelectionState : public GameState {
 
@@ -95,21 +78,6 @@ private:
 
 };
 
-class GetReadyState : public GameState {
-
-public:
-    GetReadyState (Game* game);
-    virtual void pressStart();
-    virtual void moveStick(sf::Vector2i direction);
-    virtual void update(sf::Time delta);
-    virtual void draw(sf::RenderWindow& window);
-
-private:
-
-    sf::Text m_text;
-
-};
-
 class PlayingState : public GameState {
 
 public:
@@ -126,6 +94,8 @@ public:
     void updateCameraPosition();
     void resetToZero();
     void resetCurrentLevel();
+
+    int getKills();
 
 private:
 
@@ -146,26 +116,11 @@ private:
 
 };
 
-class WonState : public GameState {
-
-public:
-    WonState (Game* game, GameState* playingState);
-    virtual void pressStart();
-    virtual void moveStick(sf::Vector2i direction);
-    virtual void update(sf::Time delta);
-    virtual void draw(sf::RenderWindow& window);
-
-private:
-
-    sf::Text m_text;
-    PlayingState* m_playingState;
-
-};
 
 class LostState : public GameState {
 
 public:
-    LostState (Game* game);
+    LostState (Game* game, GameState* playingState);
     virtual void pressStart();
     virtual void moveStick(sf::Vector2i direction);
     virtual void update(sf::Time delta);
@@ -174,6 +129,9 @@ public:
 private:
 
     sf::Text m_text;
+    sf::Text m_textKills;
+    PlayingState* m_playingState;
+
 
 };
 

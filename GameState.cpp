@@ -45,19 +45,6 @@ WellcomeState::WellcomeState(Game* game): GameState(game){
 
 }
 
-LevelInfoState::LevelInfoState(Game* game): GameState(game){
-
-    m_text.setFont(game->getFont());
-    m_text.setString("Level 1");
-    m_text.setCharacterSize(50);
-
-    centerOrigin(m_text);
-    m_text.setPosition(600,300);
-
-
-}
-
-
 
 CharacterSelectionState::CharacterSelectionState(Game* game)
         : GameState(game)
@@ -78,17 +65,6 @@ CharacterSelectionState::CharacterSelectionState(Game* game)
 
 }
 
-GetReadyState::GetReadyState(Game* game): GameState(game){
-
-    m_text.setFont(game->getFont());
-    m_text.setString("Press Start when you are ready");
-    m_text.setCharacterSize(40);
-
-    centerOrigin(m_text);
-    m_text.setPosition(500,300);
-
-}
-
 
 
 int GameState::m_cN = 0;
@@ -98,15 +74,14 @@ int GameState::m_cN = 0;
 
 PlayingState::PlayingState(Game* game)
         : GameState(game)
-//,m_hero(game->getTexture())
+
 ,m_map(game->getTexture())
 ,m_hero(nullptr)
 ,m_level(0)
 
 
-{
-    //m_hero.move(400,50);
 
+{
 
     m_hero = new Hero(game->getTexture(), m_cN);
     m_hero->setMap(&m_map);
@@ -155,30 +130,25 @@ PlayingState::~PlayingState() {
 
 }
 
-WonState::WonState(Game* game, GameState* playingState):
-        GameState(game)
-,m_playingState(static_cast<PlayingState*>(playingState))
-{
+
+LostState::LostState(Game* game, GameState* playingState): GameState(game)
+        ,m_playingState(static_cast<PlayingState*>(playingState)){
 
 
     m_text.setFont(game->getFont());
-    m_text.setString("You Won !");
+    m_text.setString("You Lost :( \n\n\n");
     m_text.setCharacterSize(50);
 
     centerOrigin(m_text);
     m_text.setPosition(600,300);
 
-}
+    m_textKills.setFont(game->getFont());
+    m_textKills.setString("Kills:  " + std::to_string(0));
+    m_textKills.setCharacterSize(50);
 
-LostState::LostState(Game* game): GameState(game){
 
-
-    m_text.setFont(game->getFont());
-    m_text.setString("You Lost :( ");
-    m_text.setCharacterSize(50);
-
-    centerOrigin(m_text);
-    m_text.setPosition(600,300);
+    centerOrigin(m_textKills);
+    m_textKills.setPosition(600,500);
 
 }
 
@@ -191,7 +161,7 @@ Game* GameState::getGame() const{
 
 void WellcomeState::pressStart() {
 
-    getGame()->changeGameState(GameState::LevelInfo);
+    getGame()->changeGameState(GameState::CharacterSelection);
 
 }
 void WellcomeState::moveStick(sf::Vector2i direction) {
@@ -220,29 +190,7 @@ void WellcomeState::draw(sf::RenderWindow &window) {
 
 
 
-void LevelInfoState::pressStart() {
-
-    getGame()->changeGameState(GameState::CharacterSelection);
-
-}
-void LevelInfoState::moveStick(sf::Vector2i direction) {
-
-}
-void LevelInfoState::update(sf::Time delta) {
-
-
-}
-void LevelInfoState::draw(sf::RenderWindow &window) {
-
-    window.draw(m_text);
-
-}
-
-
-
 void CharacterSelectionState::pressStart() {
-
-    getGame()->changeGameState(GameState::Won);
 
 
 }
@@ -276,25 +224,6 @@ void CharacterSelectionState::draw(sf::RenderWindow &window) {
 
 }
 
-
-
-void GetReadyState::pressStart() {
-
-
-    getGame()->changeGameState(GameState::Playing);
-
-}
-void GetReadyState::moveStick(sf::Vector2i direction) {
-
-}
-void GetReadyState::update(sf::Time delta) {
-
-}
-void GetReadyState::draw(sf::RenderWindow &window) {
-
-    window.draw(m_text);
-
-}
 
 void PlayingState::resetToZero()
 {
@@ -507,31 +436,8 @@ void PlayingState::draw(sf::RenderWindow &window) {
 
 }
 
-
-
-void WonState::pressStart() {
-
-}
-void WonState::moveStick(sf::Vector2i direction) {
-
-}
-void WonState::update(sf::Time delta) {
-/*
-    static sf::Time timeBuffer = sf::Time::Zero;
-    timeBuffer += delta;
-
-    if (timeBuffer.asSeconds() > 5)
-    {
-        m_playingState->loadNextLevel();
-
-      //  getGame()->changeGameState(GameState::Playing);
-    }
-*/
-}
-void WonState::draw(sf::RenderWindow &window) {
-
-    window.draw(m_text);
-
+int PlayingState::getKills() {
+    return m_hero->getHeroKills();
 }
 
 
@@ -546,10 +452,13 @@ void LostState::moveStick(sf::Vector2i direction) {
 }
 void LostState::update(sf::Time delta) {
 
+    m_textKills.setString("Kills:  " + std::to_string(m_playingState->getKills()));
+
 }
 void LostState::draw(sf::RenderWindow &window) {
 
     window.draw(m_text);
+    window.draw(m_textKills);
 
 }
 

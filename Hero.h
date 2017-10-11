@@ -45,6 +45,9 @@ public:
 
     void notify(Event event);
 
+    int getHeroKills();
+    void setHeroKills(int k);
+
 
 
 
@@ -72,7 +75,7 @@ private:
     //Observer* observers_[MAX_OBSERVERS];
     std::vector<class Observer*> observerList;
 
-
+    int heroKills;
 
 
 

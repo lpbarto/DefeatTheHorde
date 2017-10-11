@@ -22,12 +22,7 @@ Game::Game()
 
 
     m_gameStates[GameState::Wellcome] = new WellcomeState(this);
-    m_gameStates[GameState::LevelInfo] = new LevelInfoState(this);
     m_gameStates[GameState::CharacterSelection] = new CharacterSelectionState(this);
-    m_gameStates[GameState::GetReady] = new GetReadyState(this);
-   // m_gameStates[GameState::Playing] = new PlayingState(this);
-
-   // m_gameStates[GameState::Lost] = new LostState(this);
 
     changeGameState(GameState::Wellcome);
 
@@ -100,9 +95,7 @@ void Game::changeGameState(GameState::State gameState) {
         GameState::m_cN = m_currentState->m_cN;
 
         m_gameStates[GameState::Playing] = new PlayingState(this);
-        m_gameStates[GameState::Won] = new WonState(this, m_gameStates[GameState::Playing]);
-       // m_gameStates[GameState::Won] = new WonState(this);
-        m_gameStates[GameState::Lost] = new LostState(this);
+        m_gameStates[GameState::Lost] = new LostState(this, m_gameStates[GameState::Playing]);
 
     }
 
@@ -127,3 +120,4 @@ sf::Texture& Game::getTexture() {
 sf::Texture& Game::getTextureBadge() {
     return m_textureBadge;
 }
+

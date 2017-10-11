@@ -27,8 +27,7 @@ public:
     Achievements();
     virtual void onNotify(Hero* hero, Event event);
 
-    int getHeroKills();
-    void setHeroKills(int k);
+
     float getPixelTraveled();
     void setPixelTraveled(float px);
     float getCurrentPxPosition();
@@ -37,7 +36,7 @@ public:
 
 private:
     void unlock(Event event);
-    int heroKills;
+
     float pixelTraveled;
     float currentPxPosition;
     float pxTraveled;

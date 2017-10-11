@@ -11,7 +11,7 @@ Hero::Hero(sf::Texture& texture, int characterNumber)
         , m_isAttacking(false)
         , runnerBadgeVisible(false)
         , killerBadgeVisible(false)
-
+        ,heroKills(0)
 {
     setCharNum(characterNumber);
 
@@ -298,4 +298,12 @@ void Hero::notify(Event event) {
         observerList[0]->onNotify(this, event);
    // }
 
+}
+
+int Hero::getHeroKills() {
+    return heroKills;
+}
+
+void Hero::setHeroKills(int k) {
+    heroKills = k;
 }

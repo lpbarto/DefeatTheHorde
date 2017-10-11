@@ -5,7 +5,7 @@
 #include "Observer.h"
 #include <math.h>
 
-Achievements::Achievements():heroKills(0),pixelTraveled(0) {}
+Achievements::Achievements():pixelTraveled(0) {}
 
 void Achievements::onNotify(Hero* hero, Event event) {
 
@@ -23,8 +23,8 @@ void Achievements::onNotify(Hero* hero, Event event) {
                 break;
 
             case Killer:
-                setHeroKills(getHeroKills() + 1);
-                if(getHeroKills() == 3)
+                hero->setHeroKills(hero->getHeroKills() + 1);
+                if(hero->getHeroKills() == 3)
                 {
                     hero->killerBadgeVisible = true;
                 }
@@ -42,13 +42,6 @@ void Achievements::unlock(Event event) {
 }
 
 
-int Achievements::getHeroKills() {
-    return heroKills;
-}
-
-void Achievements::setHeroKills(int k) {
-    heroKills = k;
-}
 
 float Achievements::getPixelTraveled() {
     return pixelTraveled;
