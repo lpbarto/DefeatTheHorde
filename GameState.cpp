@@ -383,6 +383,7 @@ void PlayingState::update(sf::Time delta) {
 
     m_hero->update(delta);
 
+
    for (Villain* villain : m_villains) {
        villain->update(delta);
    }

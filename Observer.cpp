@@ -34,14 +34,6 @@ void Achievements::onNotify(Hero* hero, Event event) {
     }
 }
 
-void Achievements::unlock(Event event) {
-    {
-
-    }
-
-}
-
-
 
 float Achievements::getPixelTraveled() {
     return pixelTraveled;

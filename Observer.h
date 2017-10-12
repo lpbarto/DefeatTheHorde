@@ -35,7 +35,6 @@ public:
 
 
 private:
-    void unlock(Event event);
 
     float pixelTraveled;
     float currentPxPosition;
