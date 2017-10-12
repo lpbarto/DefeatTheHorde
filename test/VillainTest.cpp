@@ -10,7 +10,7 @@ TEST(Villain, Constructor){
     villain->setOrigin(30,50);
     ASSERT_EQ(villain->getOrigin(), sf::Vector2f(30,50));
 
-    ASSERT_EQ(villain->getDirection(), sf::Vector2i(0,0));
+
 
 
 

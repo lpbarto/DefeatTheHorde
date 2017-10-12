@@ -6,8 +6,12 @@
 
 #include "../Hero.h"
 
+
 TEST(Hero, DefaultConstructor){
-    Hero *h;
+sf::Texture texture;
+
+
+    Hero *h = new Hero(texture,2);
 
     ASSERT_EQ(0,h->getDirection().x);
     ASSERT_EQ(0,h->getDirection().y);
@@ -20,7 +24,11 @@ TEST(Hero, DefaultConstructor){
 }
 
 TEST(Hero, Death){
-    Hero *h;
+
+    sf::Texture texture;
+
+
+    Hero *h = new Hero(texture,2);
 
     h->die();
     ASSERT_FALSE(!h->isDying());
