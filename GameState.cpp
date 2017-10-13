@@ -87,7 +87,7 @@ PlayingState::PlayingState(Game* game)
     m_hero->setMap(&m_map);
     m_hero->setPosition(m_map.mapCellToPixel(m_map.getHeroPosition()));
 
-    Achievements *achievements = new Achievements;
+    achievements = new Achievements;
     m_hero->addObserver(achievements);
 
 
@@ -429,10 +429,13 @@ void PlayingState::draw(sf::RenderWindow &window) {
     window.draw(m_levelText);
     window.draw(m_remainingVillainsText);
 
-     if(m_hero->runnerBadgeVisible)
+    if(achievements->getRunnerBadgeVisible())
      window.draw(m_runnerBadge);
-      if(m_hero->killerBadgeVisible)
+    if(achievements->getKillerBadgeVisible())
       window.draw(m_killerBadge);
+
+
+
 
 
 }

@@ -26,15 +26,19 @@ class Achievements : public Observer
 public:
     Achievements();
     virtual void onNotify(Hero* hero, Event event);
+    bool getRunnerBadgeVisible();
+    bool getKillerBadgeVisible();
 
+
+private:
 
     float getPixelTraveled();
     void setPixelTraveled(float px);
     float getCurrentPxPosition();
     void setCurrentPxPosition(float pos);
 
-
-private:
+    bool runnerBadgeVisible;
+    bool killerBadgeVisible;
 
     float pixelTraveled;
     float currentPxPosition;

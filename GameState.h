@@ -101,6 +101,8 @@ private:
 
     int m_level;
 
+    Achievements* achievements;
+
     Map m_map;
     Hero* m_hero;
     std::vector<Villain*> m_villains;

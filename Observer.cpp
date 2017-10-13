@@ -5,7 +5,7 @@
 #include "Observer.h"
 #include <math.h>
 
-Achievements::Achievements():pixelTraveled(0) {}
+Achievements::Achievements():pixelTraveled(0),runnerBadgeVisible(false),killerBadgeVisible(false) {}
 
 void Achievements::onNotify(Hero* hero, Event event) {
 
@@ -18,7 +18,7 @@ void Achievements::onNotify(Hero* hero, Event event) {
                 setCurrentPxPosition(hero->getNextPixelPosition());
                 if (getPixelTraveled() >= 10000)
                 {
-                  hero->runnerBadgeVisible = true;
+                  runnerBadgeVisible = true;
                 }
                 break;
 
@@ -26,7 +26,7 @@ void Achievements::onNotify(Hero* hero, Event event) {
                 hero->setHeroKills(hero->getHeroKills() + 1);
                 if(hero->getHeroKills() == 3)
                 {
-                    hero->killerBadgeVisible = true;
+                    killerBadgeVisible = true;
                 }
                 break;
 
@@ -49,4 +49,12 @@ float Achievements::getCurrentPxPosition() {
 
 void Achievements::setCurrentPxPosition(float pos) {
     currentPxPosition = pos;
+}
+
+bool Achievements::getRunnerBadgeVisible() {
+    return runnerBadgeVisible;
+}
+
+bool Achievements::getKillerBadgeVisible() {
+    return killerBadgeVisible;
 }
